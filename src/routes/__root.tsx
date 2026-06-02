@@ -103,10 +103,10 @@ function RootComponent() {
   const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
 
   useRegisterSW({
-    onRegistered(r) {
+    onRegistered(r: ServiceWorkerRegistration | undefined) {
       console.log('SW Registered: ' + r);
     },
-    onRegisterError(error) {
+    onRegisterError(error: any) {
       console.log('SW registration error', error);
     },
   });
