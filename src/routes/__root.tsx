@@ -19,6 +19,7 @@ import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { CartProvider } from "@/lib/cart";
 import { Toaster } from "@/components/ui/sonner";
+import { usePushNotifications } from "@/hooks/use-push-notifications";
 
 function NotFoundComponent() {
   return (
