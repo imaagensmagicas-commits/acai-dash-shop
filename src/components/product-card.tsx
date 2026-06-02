@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Plus } from "lucide-react";
+import { Plus, Check } from "lucide-react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { brl } from "@/lib/format";
@@ -21,58 +21,55 @@ export function ProductCard({ product, index }: { product: Product; index: numbe
   const handleAdd = () => {
     add({ id: product.id, name: product.name, price: product.price, image_url: product.image_url });
     setJustAdded(true);
-    setTimeout(() => setJustAdded(false), 2000);
+    setTimeout(() => setJustAdded(false), 1500);
   };
+
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
+      initial={{ opacity: 0, y: 12 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      transition={{ duration: 0.4, delay: index * 0.05 }}
-      whileHover={{ y: -4 }}
-      className="group relative flex flex-col overflow-hidden rounded-2xl bg-card shadow-card-soft transition-shadow hover:shadow-elegant"
+      transition={{ duration: 0.3, delay: Math.min(index * 0.03, 0.3) }}
+      className="group flex h-full flex-col overflow-hidden rounded-2xl bg-card shadow-card-soft transition-shadow hover:shadow-elegant"
     >
       <div className="relative aspect-square overflow-hidden bg-primary-gradient">
         {product.image_url ? (
           <img
             src={product.image_url}
             alt={product.name}
+            loading="lazy"
             className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
           />
         ) : (
-          <div className="grid h-full w-full place-items-center text-7xl">🥤</div>
+          <div className="grid h-full w-full place-items-center text-4xl">🥤</div>
         )}
-        <div className="absolute right-3 top-3 rounded-full bg-background/90 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wider text-primary backdrop-blur">
+        <div className="absolute right-1.5 top-1.5 rounded-full bg-background/90 px-1.5 py-0.5 text-[8px] font-semibold uppercase tracking-wider text-primary backdrop-blur sm:right-2 sm:top-2 sm:px-2 sm:text-[10px]">
           {product.category}
         </div>
       </div>
-      <div className="flex flex-1 flex-col gap-3 p-4">
+      <div className="flex flex-1 flex-col gap-1.5 p-2.5 sm:gap-2 sm:p-3">
         <div className="flex-1">
-          <h3 className="font-display text-base font-semibold leading-tight">{product.name}</h3>
+          <h3 className="line-clamp-2 font-display text-[13px] font-semibold leading-tight sm:text-sm">
+            {product.name}
+          </h3>
           {product.description && (
-            <p className="mt-1 line-clamp-2 text-sm text-muted-foreground">{product.description}</p>
+            <p className="mt-0.5 line-clamp-1 text-[11px] text-muted-foreground sm:text-xs">
+              {product.description}
+            </p>
           )}
         </div>
-        <div className="flex items-end justify-between gap-3">
-          <div>
-            <div className="text-[10px] uppercase tracking-wider text-muted-foreground">a partir de</div>
-            <div className="font-display text-xl font-bold text-primary">{brl(product.price)}</div>
+        <div className="flex items-center justify-between gap-2">
+          <div className="min-w-0">
+            <div className="text-[9px] uppercase tracking-wider text-muted-foreground">a partir de</div>
+            <div className="font-display text-base font-bold text-primary sm:text-lg">{brl(product.price)}</div>
           </div>
           <Button
-            size="sm"
+            size="icon"
             onClick={handleAdd}
-            className={`gap-1 rounded-full shadow-md transition-all ${justAdded ? "bg-success hover:bg-success text-white" : ""}`}
+            className={`h-9 w-9 shrink-0 rounded-full shadow-md transition-all ${justAdded ? "bg-success text-white hover:bg-success" : ""}`}
+            aria-label="Adicionar"
           >
-            {justAdded ? (
-              <motion.span initial={{ scale: 0 }} animate={{ scale: 1 }} className="flex items-center gap-1">
-                ✓ Pronto!
-              </motion.span>
-            ) : (
-              <>
-                <Plus className="h-4 w-4" />
-                Adicionar
-              </>
-            )}
+            {justAdded ? <Check className="h-4 w-4" /> : <Plus className="h-4 w-4" />}
           </Button>
         </div>
       </div>

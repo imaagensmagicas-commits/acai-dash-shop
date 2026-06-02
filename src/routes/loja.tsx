@@ -126,15 +126,15 @@ function Home() {
         </div>
 
         {isLoading ? (
-          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
             {Array.from({ length: 8 }).map((_, i) => (
-              <div key={i} className="h-80 animate-pulse rounded-2xl bg-muted" />
+              <div key={i} className="h-56 animate-pulse rounded-2xl bg-muted" />
             ))}
           </div>
         ) : filtered.length === 0 ? (
           <p className="py-20 text-center text-muted-foreground">Nenhum produto nesta categoria.</p>
         ) : (
-          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
             {filtered.map((p, i) => (
               <ProductCard key={p.id} product={p} index={i} />
             ))}
