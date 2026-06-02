@@ -85,6 +85,14 @@ export function ProductsPanel() {
     },
   });
 
+  const { data: categories = [] } = useQuery({
+    queryKey: ["admin-categories"],
+    queryFn: async () => {
+      const { data } = await supabase.from("categories").select("name").order("order_index");
+      return data ?? [];
+    },
+  });
+
   const saveProduct = async (e: React.FormEvent) => {
     e.preventDefault();
     const productData = {
@@ -133,7 +141,7 @@ export function ProductsPanel() {
           <p className="text-muted-foreground">Gerencie seus produtos, preços e disponibilidade.</p>
         </div>
         <Button 
-          onClick={() => setEditing({ name: "", price: 0, category: "300ml", active: true, description: "", image_url: "" })} 
+          onClick={() => setEditing({ name: "", price: 0, category: categories[0]?.name || "", active: true, description: "", image_url: "" })} 
           className="bg-primary-gradient rounded-xl shadow-lg shadow-primary/20 hover:scale-105 transition-transform"
         >
           <Plus className="mr-2 h-4 w-4" /> Novo Produto
@@ -256,9 +264,9 @@ export function ProductsPanel() {
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="300ml">300ml</SelectItem>
-                    <SelectItem value="500ml">500ml</SelectItem>
-                    <SelectItem value="especial">Especial / Sabores</SelectItem>
+                    {categories.map((c: any) => (
+                      <SelectItem key={c.name} value={c.name}>{c.name}</SelectItem>
+                    ))}
                   </SelectContent>
                 </Select>
               </div>

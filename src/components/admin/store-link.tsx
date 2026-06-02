@@ -1,28 +1,73 @@
 import { useState, useEffect } from "react";
-import { Link, Copy, ExternalLink, QrCode } from "lucide-react";
+import { Link, Copy, ExternalLink, QrCode, Power, PowerOff } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { QRCodeSVG } from "qrcode.react";
 import { motion } from "framer-motion";
+import { supabase } from "@/integrations/supabase/client";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { cn } from "@/lib/utils";
 
 export function StoreLinkSection() {
+  const queryClient = useQueryClient();
   const [storeUrl, setStoreUrl] = useState("");
 
   useEffect(() => {
     setStoreUrl(`${window.location.origin}/loja`);
   }, []);
 
+  const { data: storeSettings } = useQuery({
+    queryKey: ["store-settings-admin"],
+    queryFn: async () => {
+      const { data } = await supabase.from("store_settings").select("*").eq("slug", "loja").single();
+      return data;
+    },
+  });
+
+  const updateMutation = useMutation({
+    mutationFn: async (values: any) => {
+      const { error } = await supabase.from("store_settings").update(values).eq("slug", "loja");
+      if (error) throw error;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["store-settings-admin"] });
+      toast.success(storeSettings?.is_open ? "Loja fechada!" : "Loja aberta!");
+    },
+  });
+
   const copyToClipboard = () => {
     navigator.clipboard.writeText(storeUrl);
     toast.success("Link copiado com sucesso!");
   };
 
+  const toggleStatus = () => {
+    if (!storeSettings) return;
+    updateMutation.mutate({ is_open: !storeSettings.is_open });
+  };
+
   return (
     <div className="space-y-6 max-w-4xl">
-      <div>
-        <h1 className="font-display text-3xl font-bold">Link da Loja</h1>
-        <p className="text-muted-foreground">Compartilhe este link com seus clientes para que eles possam acessar seu catálogo.</p>
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div>
+          <h1 className="font-display text-3xl font-bold">Minha Loja</h1>
+          <p className="text-muted-foreground">Gerencie o acesso e a visibilidade do seu catálogo.</p>
+        </div>
+        
+        <Button 
+          onClick={toggleStatus}
+          variant={storeSettings?.is_open ? "destructive" : "default"}
+          className={cn(
+            "rounded-xl h-12 px-6 font-bold shadow-lg transition-all hover:scale-105",
+            !storeSettings?.is_open && "bg-success hover:bg-success/90"
+          )}
+        >
+          {storeSettings?.is_open ? (
+            <><PowerOff className="mr-2 h-4 w-4" /> Fechar Loja</>
+          ) : (
+            <><Power className="mr-2 h-4 w-4" /> Abrir Loja</>
+          )}
+        </Button>
       </div>
 
       <div className="grid gap-6 md:grid-cols-2">

@@ -19,13 +19,6 @@ export const Route = createFileRoute("/loja")({
   component: Home,
 });
 
-const categories = [
-  { key: "all", label: "Todos" },
-  { key: "300ml", label: "300ml" },
-  { key: "500ml", label: "500ml" },
-  { key: "especial", label: "Especiais" },
-];
-
 function Home() {
   const [cat, setCat] = useState("all");
 
@@ -42,6 +35,18 @@ function Home() {
     },
   });
 
+  const { data: categories = [] } = useQuery({
+    queryKey: ["categories"],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("categories")
+        .select("*")
+        .order("order_index");
+      if (error) throw error;
+      return [{ id: "all", name: "Todos" }, ...data];
+    },
+  });
+
   const { data: products = [], isLoading } = useQuery({
     queryKey: ["products"],
     queryFn: async () => {
@@ -49,8 +54,7 @@ function Home() {
         .from("products")
         .select("*")
         .eq("active", true)
-        .order("category")
-        .order("price");
+        .order("name");
       if (error) throw error;
       return data;
     },
@@ -60,6 +64,13 @@ function Home() {
 
   return (
     <div className="min-h-screen bg-background">
+      {storeSettings?.primary_color && (
+        <style dangerouslySetInnerHTML={{ __html: `
+          :root {
+            --primary: ${storeSettings.primary_color};
+          }
+        ` }} />
+      )}
       <SiteHeader />
 
       {/* Hero */}
@@ -109,17 +120,17 @@ function Home() {
             <p className="mt-1 text-muted-foreground">Escolha o tamanho e o sabor</p>
           </div>
           <div className="flex flex-wrap gap-2">
-            {categories.map((c) => (
+            {categories.map((c: any) => (
               <button
-                key={c.key}
-                onClick={() => setCat(c.key)}
+                key={c.id || c.name}
+                onClick={() => setCat(c.name === "Todos" ? "all" : c.name)}
                 className={`rounded-full px-4 py-1.5 text-sm font-medium transition ${
-                  cat === c.key
+                  (cat === "all" && c.name === "Todos") || cat === c.name
                     ? "bg-primary text-primary-foreground shadow-md"
                     : "bg-secondary text-secondary-foreground hover:bg-accent"
                 }`}
               >
-                {c.label}
+                {c.name}
               </button>
             ))}
           </div>
