@@ -11,7 +11,9 @@ import { Dashboard } from "@/components/admin/dashboard";
 import { OrdersPanel } from "@/components/admin/orders-panel";
 import { ProductsPanel } from "@/components/admin/products-panel";
 import { SettingsPanel } from "@/components/admin/settings-panel";
-import { StoreLinkSection } from "@/components/admin/store-link.tsx";
+import { StoreLinkSection } from "@/components/admin/store-link";
+import { CategoriesPanel } from "@/components/admin/categories-panel";
+import { ProfilePanel } from "@/components/admin/profile-panel";
 
 export const Route = createFileRoute("/_authenticated/admin")({
   head: () => ({ 
@@ -131,8 +133,10 @@ function AdminPage() {
             {currentTab === "dashboard" && <Dashboard />}
             {currentTab === "orders" && <OrdersPanel />}
             {currentTab === "products" && <ProductsPanel />}
+            {currentTab === "categories" && <CategoriesPanel />}
             {currentTab === "store-link" && <StoreLinkSection />}
             {currentTab === "settings" && <SettingsPanel />}
+            {currentTab === "profile" && <ProfilePanel />}
           </motion.div>
         </div>
       </SidebarInset>

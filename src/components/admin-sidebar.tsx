@@ -37,8 +37,10 @@ export function AdminSidebar({ currentTab, setTab }: AdminSidebarProps) {
     { id: "dashboard", label: "Dashboard", icon: LayoutDashboard },
     { id: "orders", label: "Pedidos", icon: ShoppingBag },
     { id: "products", label: "Produtos", icon: Package },
-    { id: "store-link", label: "Link da Loja", icon: LinkIcon },
+    { id: "categories", label: "Categorias", icon: Package },
+    { id: "store-link", label: "Minha Loja", icon: LinkIcon },
     { id: "settings", label: "Configurações", icon: Settings },
+    { id: "profile", label: "Perfil", icon: LogOut },
   ];
 
   const handleTabChange = (tabId: string) => {
