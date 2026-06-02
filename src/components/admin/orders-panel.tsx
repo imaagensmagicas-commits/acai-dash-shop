@@ -58,19 +58,19 @@ export function OrdersPanel() {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 md:space-y-6">
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <h1 className="font-display text-3xl font-bold">Gestão de Pedidos</h1>
-          <p className="text-muted-foreground">Monitore e atualize os pedidos em tempo real.</p>
+          <h1 className="font-display text-2xl md:text-3xl font-bold">Gestão de Pedidos</h1>
+          <p className="text-sm text-muted-foreground">Monitore e atualize os pedidos em tempo real.</p>
         </div>
         
         <div className="flex items-center gap-2">
-          <div className="relative">
+          <div className="relative w-full">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
             <Input 
-              placeholder="Buscar pedido ou cliente..." 
-              className="pl-10 w-full md:w-[300px] rounded-xl border-none shadow-sm focus-visible:ring-primary"
+              placeholder="Cliente ou Nº..." 
+              className="pl-10 w-full md:w-[300px] rounded-xl border-none shadow-sm focus-visible:ring-primary h-12 md:h-10"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
             />
@@ -78,7 +78,7 @@ export function OrdersPanel() {
         </div>
       </div>
 
-      <div className="flex flex-wrap gap-2 pb-2">
+      <div className="flex flex-nowrap overflow-x-auto gap-2 pb-4 scrollbar-hide -mx-4 px-4 md:mx-0 md:px-0">
         {(['todos', 'novo', 'preparando', 'saiu_entrega', 'finalizado', 'cancelado'] as const).map((status) => (
           <Button
             key={status}
@@ -86,7 +86,7 @@ export function OrdersPanel() {
             size="sm"
             onClick={() => setFilterStatus(status)}
             className={cn(
-              "rounded-full px-4 h-9 font-medium transition-all",
+              "rounded-full px-4 h-10 md:h-9 font-medium transition-all whitespace-nowrap shrink-0",
               filterStatus === status ? "bg-primary-gradient border-none shadow-md" : "hover:bg-primary/5"
             )}
           >
