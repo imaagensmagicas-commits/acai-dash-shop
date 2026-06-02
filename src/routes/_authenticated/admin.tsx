@@ -123,33 +123,115 @@ function OrdersPanel() {
     refetchInterval: 3000
   });
 
+  const updateStatus = async (id: string, status: string) => {
+    const { error } = await supabase.from("orders").update({ status }).eq("id", id);
+    if (error) return toast.error(error.message);
+    toast.success(`Status atualizado para ${statusLabels[status]}`);
+    setSelectedOrder(null);
+    qc.invalidateQueries({ queryKey: ["admin-orders"] });
+  };
+
   return (
     <div className="space-y-6">
-      <h1 className="font-display text-3xl font-bold">Pedidos</h1>
+      <h1 className="font-display text-3xl font-bold">Pedidos em Tempo Real</h1>
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
         {orders.map((o: any) => (
-          <Card key={o.id} className="cursor-pointer hover:shadow-lg transition-all" onClick={() => setSelectedOrder(o)}>
-            <CardHeader>
-              <div className="flex justify-between">
-                <span className="font-mono text-sm font-bold text-primary">{o.order_number}</span>
-                <Badge variant={o.status === "novo" ? "default" : "secondary"}>{statusLabels[o.status]}</Badge>
+          <Card key={o.id} className="group cursor-pointer hover:shadow-xl transition-all duration-300 border-l-4" style={{ borderLeftColor: o.status === 'novo' ? '#7c3aed' : '#cbd5e1' }} onClick={() => setSelectedOrder(o)}>
+            <CardHeader className="pb-2">
+              <div className="flex justify-between items-center">
+                <span className="font-mono text-xs font-bold px-2 py-1 bg-primary/10 text-primary rounded">{o.order_number}</span>
+                <Badge className={o.status === 'novo' ? 'bg-primary' : ''}>{statusLabels[o.status]}</Badge>
               </div>
             </CardHeader>
             <CardContent>
-              <div className="font-semibold">{o.customer_name}</div>
-              <div className="text-sm text-muted-foreground">{brl(Number(o.total))}</div>
+              <div className="text-lg font-bold">{o.customer_name}</div>
+              <div className="text-sm text-muted-foreground mt-1 flex items-center gap-1">
+                {o.delivery_type === 'entrega' ? '🛵 Entrega' : '🏪 Retirada'}
+              </div>
+              <div className="mt-4 flex justify-between items-center">
+                <div className="text-xl font-bold text-primary">{brl(Number(o.total))}</div>
+                <div className="text-[10px] text-muted-foreground uppercase">{new Date(o.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</div>
+              </div>
             </CardContent>
           </Card>
         ))}
       </div>
 
       <Dialog open={!!selectedOrder} onOpenChange={() => setSelectedOrder(null)}>
-        <DialogContent className="max-w-md">
-          <DialogHeader><DialogTitle>Detalhes do pedido #{selectedOrder?.order_number}</DialogTitle></DialogHeader>
+        <DialogContent className="max-w-md sm:max-w-lg">
+          <DialogHeader>
+            <DialogTitle className="flex items-center gap-2">
+              Pedido <span className="text-primary font-mono">{selectedOrder?.order_number}</span>
+            </DialogTitle>
+          </DialogHeader>
           {selectedOrder && (
-            <div className="space-y-4">
-              <div><Label>Cliente</Label><div>{selectedOrder.customer_name}</div></div>
-              <Button onClick={() => window.print()} className="w-full gap-2 no-print"><Printer className="h-4 w-4" /> Imprimir Cozinha</Button>
+            <div className="space-y-6">
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <Label className="text-xs text-muted-foreground uppercase">Cliente</Label>
+                  <div className="font-semibold text-lg">{selectedOrder.customer_name}</div>
+                  <a href={`https://wa.me/${selectedOrder.whatsapp.replace(/\D/g, '')}`} target="_blank" className="text-success text-sm flex items-center gap-1 hover:underline">
+                    WhatsApp: {selectedOrder.whatsapp}
+                  </a>
+                </div>
+                <div>
+                  <Label className="text-xs text-muted-foreground uppercase">Data/Hora</Label>
+                  <div>{new Date(selectedOrder.created_at).toLocaleString()}</div>
+                </div>
+              </div>
+
+              {selectedOrder.delivery_type === 'entrega' && (
+                <div>
+                  <Label className="text-xs text-muted-foreground uppercase">Endereço de Entrega</Label>
+                  <div className="bg-surface p-3 rounded-lg border italic">{selectedOrder.address}</div>
+                </div>
+              )}
+
+              <div className="border rounded-xl overflow-hidden">
+                <div className="bg-muted px-4 py-2 text-xs font-bold uppercase">Itens do Pedido</div>
+                <div className="p-4 space-y-2">
+                  {(selectedOrder.items_preview || []).map((item: any, i: number) => (
+                    <div key={i} className="flex justify-between items-center text-sm">
+                      <span><span className="font-bold">{item.quantity}x</span> {item.name}</span>
+                      <span className="text-muted-foreground">{brl(item.price * item.quantity)}</span>
+                    </div>
+                  ))}
+                  <div className="pt-2 border-t flex justify-between font-bold text-lg">
+                    <span>Total</span>
+                    <span className="text-primary">{brl(Number(selectedOrder.total))}</span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 gap-2 no-print">
+                <Button variant="outline" onClick={() => updateStatus(selectedOrder.id, 'preparando')}>⚙️ Preparando</Button>
+                <Button variant="outline" onClick={() => updateStatus(selectedOrder.id, 'saiu_entrega')}>🛵 Saiu p/ Entrega</Button>
+                <Button className="col-span-2 bg-success hover:bg-success/90" onClick={() => updateStatus(selectedOrder.id, 'finalizado')}>✅ Finalizar Pedido</Button>
+                <Button variant="ghost" className="col-span-2 text-destructive" onClick={() => updateStatus(selectedOrder.id, 'cancelado')}>❌ Cancelar Pedido</Button>
+              </div>
+
+              <Button onClick={() => window.print()} variant="secondary" className="w-full gap-2 no-print">
+                <Printer className="h-4 w-4" /> Imprimir p/ Cozinha
+              </Button>
+
+              {/* Print Only View */}
+              <div className="print-only fixed inset-0 bg-white p-8 space-y-4">
+                <h1 className="text-2xl font-bold border-b pb-2">KL AÇAÍ - PEDIDO #{selectedOrder.order_number}</h1>
+                <div className="grid grid-cols-2 text-sm">
+                  <div><strong>Cliente:</strong> {selectedOrder.customer_name}</div>
+                  <div><strong>Tipo:</strong> {selectedOrder.delivery_type.toUpperCase()}</div>
+                </div>
+                {selectedOrder.address && <div><strong>Endereço:</strong> {selectedOrder.address}</div>}
+                <div className="border-y py-4 my-4">
+                  {(selectedOrder.items_preview || []).map((item: any, i: number) => (
+                    <div key={i} className="flex justify-between">
+                      <span>{item.quantity}x {item.name}</span>
+                      <span>{brl(item.price * item.quantity)}</span>
+                    </div>
+                  ))}
+                </div>
+                <div className="text-right text-xl font-bold">TOTAL: {brl(Number(selectedOrder.total))}</div>
+              </div>
             </div>
           )}
         </DialogContent>
