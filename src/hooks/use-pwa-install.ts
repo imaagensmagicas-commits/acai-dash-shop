@@ -9,20 +9,24 @@ export function usePWAInstall() {
     // Check if iOS
     const userAgent = window.navigator.userAgent.toLowerCase();
     const isIosDevice = /iphone|ipad|ipod/.test(userAgent);
-    setIsIOS(isIosDevice);
+    
+    // Check if already installed
+    const isStandalone = window.matchMedia('(display-mode: standalone)').matches || (window.navigator as any).standalone;
+    
+    setIsIOS(isIosDevice && !isStandalone);
 
     const handler = (e: any) => {
       e.preventDefault();
       setDeferredPrompt(e);
-      setIsInstallable(true);
+      setIsInstallable(!isStandalone);
       console.log('PWA: beforeinstallprompt event fired');
     };
 
     window.addEventListener('beforeinstallprompt', handler);
 
-    // Check if already installed
-    if (window.matchMedia('(display-mode: standalone)').matches) {
+    if (isStandalone) {
       setIsInstallable(false);
+      setIsIOS(false);
     }
 
     return () => window.removeEventListener('beforeinstallprompt', handler);
