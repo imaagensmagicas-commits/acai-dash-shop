@@ -82,6 +82,7 @@ function AdminPage() {
           {currentTab === "dashboard" && <Dashboard />}
           {currentTab === "orders" && <OrdersPanel />}
           {currentTab === "products" && <ProductsPanel />}
+          {currentTab === "settings" && <SettingsPanel />}
         </motion.div>
       </SidebarInset>
     </SidebarProvider>
