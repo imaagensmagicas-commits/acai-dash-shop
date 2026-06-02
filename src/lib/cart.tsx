@@ -18,6 +18,7 @@ interface CartCtx {
   count: number;
   open: boolean;
   setOpen: (o: boolean) => void;
+  isAdding: boolean;
 }
 
 const Ctx = createContext<CartCtx | null>(null);
@@ -50,7 +51,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
   const count = useMemo(() => items.reduce((s, i) => s + i.quantity, 0), [items]);
 
   return (
-    <Ctx.Provider value={{ items, add, remove, setQty, clear, total, count, open, setOpen }}>
+    <Ctx.Provider value={{ items, add, remove, setQty, clear, total, count, open, setOpen, isAdding }}>
       {children}
     </Ctx.Provider>
   );

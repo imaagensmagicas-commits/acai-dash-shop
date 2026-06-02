@@ -21,8 +21,16 @@ export const Route = createFileRoute("/_authenticated/admin")({
 });
 
 type Order = {
-  id: string; customer_name: string; phone: string; address: string | null;
-  notes: string | null; delivery_type: string; status: string; total: number;
+  id: string;
+  order_number: string;
+  customer_name: string;
+  whatsapp: string;
+  address: string | null;
+  notes: string | null;
+  delivery_type: string;
+  status: string;
+  total: number;
+  items_preview: { name: string; quantity: number; price: number }[];
   created_at: string;
 };
 type OrderItem = { id: string; order_id: string; product_name: string; unit_price: number; quantity: number };
@@ -243,8 +251,13 @@ function OrdersPanel() {
               className="flex flex-col gap-3 rounded-2xl bg-card p-4 shadow-card-soft">
               <div className="flex items-start justify-between gap-2">
                 <div>
-                  <div className="font-semibold">{o.customer_name}</div>
-                  <div className="text-xs text-muted-foreground">{o.phone}</div>
+                  <div className="flex items-center gap-2">
+                    <span className="text-[10px] font-mono font-bold text-primary bg-primary/10 px-1.5 py-0.5 rounded">
+                      {o.order_number}
+                    </span>
+                    <div className="font-semibold">{o.customer_name}</div>
+                  </div>
+                  <div className="text-xs text-muted-foreground">{o.whatsapp}</div>
                 </div>
                 <Badge className={STATUS_COLORS[o.status] ?? ""}>{statusLabels[o.status]}</Badge>
               </div>
@@ -253,10 +266,10 @@ function OrdersPanel() {
                 {o.notes && <div className="mt-1 italic">"{o.notes}"</div>}
               </div>
               <ul className="space-y-1 border-t border-dashed pt-2 text-sm">
-                {(itemsByOrder[o.id] ?? []).map((i) => (
-                  <li key={i.id} className="flex justify-between gap-2">
-                    <span>{i.quantity}× {i.product_name}</span>
-                    <span className="text-muted-foreground">{brl(i.unit_price * i.quantity)}</span>
+                {(o.items_preview || []).map((i, idx) => (
+                  <li key={idx} className="flex justify-between gap-2">
+                    <span>{i.quantity}× {i.name}</span>
+                    <span className="text-muted-foreground">{brl(i.price * i.quantity)}</span>
                   </li>
                 ))}
               </ul>
