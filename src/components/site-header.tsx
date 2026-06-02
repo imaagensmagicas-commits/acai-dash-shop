@@ -5,7 +5,7 @@ import { useCart } from "@/lib/cart";
 import { Button } from "@/components/ui/button";
 
 export function SiteHeader() {
-  const { count, setOpen } = useCart();
+  const { count, setOpen, isAdding } = useCart();
   return (
     <header className="sticky top-0 z-40 border-b border-border/60 bg-background/80 backdrop-blur-xl">
       <div className="container mx-auto flex h-16 items-center justify-between px-4">
@@ -21,9 +21,9 @@ export function SiteHeader() {
         <Button
           variant="outline"
           onClick={() => setOpen(true)}
-          className="relative gap-2 border-primary/20 hover:border-primary"
+          className={`relative gap-2 border-primary/20 hover:border-primary transition-all ${isAdding ? "scale-110 border-gold shadow-[0_0_15px_rgba(251,191,36,0.3)]" : ""}`}
         >
-          <ShoppingBag className="h-4 w-4" />
+          <ShoppingBag className={`h-4 w-4 ${isAdding ? "animate-bounce" : ""}`} />
           <span className="hidden sm:inline">Sacola</span>
           {count > 0 && (
             <motion.span
