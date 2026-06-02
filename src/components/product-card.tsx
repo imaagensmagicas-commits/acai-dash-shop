@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { Plus } from "lucide-react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { brl } from "@/lib/format";
 import { useCart } from "@/lib/cart";
@@ -14,8 +15,8 @@ interface Product {
 }
 
 export function ProductCard({ product, index }: { product: Product; index: number }) {
-  const { add, isAdding } = useCart();
-  const [justAdded, setJustAdded] = (import("react")).useState(false);
+  const { add } = useCart();
+  const [justAdded, setJustAdded] = useState(false);
 
   const handleAdd = () => {
     add({ id: product.id, name: product.name, price: product.price, image_url: product.image_url });
