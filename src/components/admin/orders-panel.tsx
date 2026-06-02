@@ -47,12 +47,12 @@ export function OrdersPanel() {
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case 'novo': return 'bg-primary text-white';
-      case 'preparando': return 'bg-amber-500 text-white';
-      case 'saiu_entrega': return 'bg-blue-500 text-white';
-      case 'finalizado': return 'bg-success text-white';
-      case 'cancelado': return 'bg-destructive text-white';
-      default: return 'bg-slate-500 text-white';
+      case 'novo': return 'bg-destructive text-white animate-pulse'; // Red
+      case 'preparando': return 'bg-amber-500 text-white'; // Yellow
+      case 'saiu_entrega': return 'bg-blue-500 text-white'; // Blue
+      case 'finalizado': return 'bg-success text-white'; // Green
+      case 'cancelado': return 'bg-slate-500 text-white'; // Slate
+      default: return 'bg-slate-400 text-white';
     }
   };
 
