@@ -49,20 +49,23 @@ function AdminPage() {
         'postgres_changes',
         { event: 'INSERT', schema: 'public', table: 'orders' },
         (payload) => {
-          toast.info("Novo pedido recebido!", {
-            description: `Pedido ${payload.new.order_number} de ${payload.new.customer_name}`,
+          const newOrder = payload.new;
+          toast.info("📦 Novo pedido recebido!", {
+            description: `Pedido ${newOrder.order_number || newOrder.id.slice(0, 4)} de ${newOrder.customer_name}`,
             action: {
               label: "Ver pedido",
               onClick: () => setCurrentTab("orders")
             },
-            duration: 8000,
+            duration: 10000,
           });
           
-          // Try to play sound if the user has interacted with the page
-          const audio = new Audio('https://assets.mixkit.co/active_storage/sfx/2869/2869-preview.mp3');
-          audio.play().catch(() => {
-            console.log("Audio playback was prevented. User needs to interact with the page first.");
-          });
+          // Sound notification
+          try {
+            const audio = new Audio('https://actions.google.com/sounds/v1/notifications/piece_of_cake.ogg');
+            audio.play();
+          } catch (e) {
+            console.error("Audio playback error", e);
+          }
         }
       )
       .subscribe();
