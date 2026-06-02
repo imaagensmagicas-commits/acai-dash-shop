@@ -139,11 +139,11 @@ export function SettingsPanel() {
                 <div className="flex-1 grid md:grid-cols-2 gap-6 w-full">
                   <div className="space-y-2">
                     <Label htmlFor="name" className="text-[10px] uppercase font-black tracking-widest text-muted-foreground">Nome da Loja</Label>
-                    <Input id="name" name="name" defaultValue={storeSettings?.name} className="rounded-xl border-slate-100 bg-slate-50" />
+                    <Input id="name" name="name" defaultValue={storeSettings?.name || ""} className="rounded-xl border-slate-100 bg-slate-50" />
                   </div>
                   <div className="space-y-2">
                     <Label htmlFor="whatsapp" className="text-[10px] uppercase font-black tracking-widest text-muted-foreground">Telefone WhatsApp</Label>
-                    <Input id="whatsapp" name="whatsapp" defaultValue={storeSettings?.whatsapp_number} className="rounded-xl border-slate-100 bg-slate-50" />
+                    <Input id="whatsapp" name="whatsapp" defaultValue={storeSettings?.whatsapp_number || ""} className="rounded-xl border-slate-100 bg-slate-50" />
                   </div>
                 </div>
               </div>
@@ -153,11 +153,11 @@ export function SettingsPanel() {
                 <div className="grid grid-cols-2 gap-4">
                   <div className="relative">
                     <span className="absolute left-3 top-1/2 -translate-y-1/2 text-[10px] font-bold text-muted-foreground uppercase">Abre</span>
-                    <Input name="opening_time" defaultValue={storeSettings?.opening_time} className="rounded-xl border-slate-100 bg-slate-50 pl-14" />
+                    <Input name="opening_time" defaultValue={storeSettings?.opening_time || ""} className="rounded-xl border-slate-100 bg-slate-50 pl-14" />
                   </div>
                   <div className="relative">
                     <span className="absolute left-3 top-1/2 -translate-y-1/2 text-[10px] font-bold text-muted-foreground uppercase">Fecha</span>
-                    <Input name="closing_time" defaultValue={storeSettings?.closing_time} className="rounded-xl border-slate-100 bg-slate-50 pl-14" />
+                    <Input name="closing_time" defaultValue={storeSettings?.closing_time || ""} className="rounded-xl border-slate-100 bg-slate-50 pl-14" />
                   </div>
                 </div>
               </div>
