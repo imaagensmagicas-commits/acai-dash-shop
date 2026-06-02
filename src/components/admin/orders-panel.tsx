@@ -374,9 +374,6 @@ export function OrdersPanel() {
   );
 }
 
-function cn(...classes: any[]) {
-  return classes.filter(Boolean).join(' ');
-}
 
 function formatTimeAgo(date: Date) {
   const seconds = Math.floor((new Date().getTime() - date.getTime()) / 1000);
