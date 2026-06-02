@@ -396,3 +396,36 @@ function ProductsPanel() {
     </div>
   );
 }
+
+function SettingsPanel() {
+  return (
+    <div className="space-y-6">
+      <h1 className="font-display text-3xl font-bold">Configurações</h1>
+      <Card className="shadow-card-soft">
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <SettingsIcon className="h-5 w-5" /> Perfil da Loja
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <div className="grid gap-2">
+            <Label>Nome da Loja</Label>
+            <Input defaultValue="KL Açaí" />
+          </div>
+          <div className="grid gap-2">
+            <Label>Horário de Funcionamento</Label>
+            <Input defaultValue="10:00 - 22:00" />
+          </div>
+          <div className="grid gap-2">
+            <Label>Status da Loja</Label>
+            <div className="flex items-center gap-2">
+              <Badge className="bg-success">Aberta</Badge>
+              <Button size="sm" variant="outline">Fechar Loja</Button>
+            </div>
+          </div>
+          <Button className="bg-primary-gradient mt-4">Salvar Alterações</Button>
+        </CardContent>
+      </Card>
+    </div>
+  );
+}
