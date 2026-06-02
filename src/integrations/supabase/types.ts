@@ -69,6 +69,7 @@ export type Database = {
           items_preview: Json | null
           notes: string | null
           order_number: string | null
+          sequential_id: number
           status: Database["public"]["Enums"]["order_status"]
           total: number
           updated_at: string
@@ -83,6 +84,7 @@ export type Database = {
           items_preview?: Json | null
           notes?: string | null
           order_number?: string | null
+          sequential_id?: number
           status?: Database["public"]["Enums"]["order_status"]
           total: number
           updated_at?: string
@@ -97,6 +99,7 @@ export type Database = {
           items_preview?: Json | null
           notes?: string | null
           order_number?: string | null
+          sequential_id?: number
           status?: Database["public"]["Enums"]["order_status"]
           total?: number
           updated_at?: string
