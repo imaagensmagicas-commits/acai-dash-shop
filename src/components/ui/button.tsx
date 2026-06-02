@@ -36,11 +36,22 @@ export interface ButtonProps
   asChild?: boolean;
 }
 
+import { motion } from "framer-motion";
+
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   ({ className, variant, size, asChild = false, ...props }, ref) => {
-    const Comp = asChild ? Slot : "button";
+    if (asChild) {
+      const Comp = Slot;
+      return <Comp className={cn(buttonVariants({ variant, size, className }))} ref={ref} {...props} />;
+    }
+
     return (
-      <Comp className={cn(buttonVariants({ variant, size, className }))} ref={ref} {...props} />
+      <motion.button
+        whileTap={{ scale: 0.97 }}
+        className={cn(buttonVariants({ variant, size, className }))}
+        ref={ref as any}
+        {...props}
+      />
     );
   },
 );
