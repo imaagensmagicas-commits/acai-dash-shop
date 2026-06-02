@@ -135,3 +135,20 @@
   0% { background-position: -200% 0; }
   100% { background-position: 200% 0; }
 }
+
+@media print {
+  .no-print {
+    display: none !important;
+  }
+  .print-only {
+    display: block !important;
+  }
+  body {
+    background: white !important;
+    color: black !important;
+  }
+}
+
+.print-only {
+  display: none;
+}
