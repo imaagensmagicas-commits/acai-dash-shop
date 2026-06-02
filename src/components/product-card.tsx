@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { Plus } from "lucide-react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { brl } from "@/lib/format";
 import { useCart } from "@/lib/cart";
@@ -15,6 +16,13 @@ interface Product {
 
 export function ProductCard({ product, index }: { product: Product; index: number }) {
   const { add } = useCart();
+  const [justAdded, setJustAdded] = useState(false);
+
+  const handleAdd = () => {
+    add({ id: product.id, name: product.name, price: product.price, image_url: product.image_url });
+    setJustAdded(true);
+    setTimeout(() => setJustAdded(false), 2000);
+  };
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -52,11 +60,19 @@ export function ProductCard({ product, index }: { product: Product; index: numbe
           </div>
           <Button
             size="sm"
-            onClick={() => add({ id: product.id, name: product.name, price: product.price, image_url: product.image_url })}
-            className="gap-1 rounded-full shadow-md"
+            onClick={handleAdd}
+            className={`gap-1 rounded-full shadow-md transition-all ${justAdded ? "bg-success hover:bg-success text-white" : ""}`}
           >
-            <Plus className="h-4 w-4" />
-            Adicionar
+            {justAdded ? (
+              <motion.span initial={{ scale: 0 }} animate={{ scale: 1 }} className="flex items-center gap-1">
+                ✓ Pronto!
+              </motion.span>
+            ) : (
+              <>
+                <Plus className="h-4 w-4" />
+                Adicionar
+              </>
+            )}
           </Button>
         </div>
       </div>

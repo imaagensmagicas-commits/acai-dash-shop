@@ -66,11 +66,13 @@ export type Database = {
           customer_name: string
           delivery_type: Database["public"]["Enums"]["delivery_type"]
           id: string
+          items_preview: Json | null
           notes: string | null
-          phone: string
+          order_number: string | null
           status: Database["public"]["Enums"]["order_status"]
           total: number
           updated_at: string
+          whatsapp: string
         }
         Insert: {
           address?: string | null
@@ -78,11 +80,13 @@ export type Database = {
           customer_name: string
           delivery_type: Database["public"]["Enums"]["delivery_type"]
           id?: string
+          items_preview?: Json | null
           notes?: string | null
-          phone: string
+          order_number?: string | null
           status?: Database["public"]["Enums"]["order_status"]
           total: number
           updated_at?: string
+          whatsapp: string
         }
         Update: {
           address?: string | null
@@ -90,11 +94,13 @@ export type Database = {
           customer_name?: string
           delivery_type?: Database["public"]["Enums"]["delivery_type"]
           id?: string
+          items_preview?: Json | null
           notes?: string | null
-          phone?: string
+          order_number?: string | null
           status?: Database["public"]["Enums"]["order_status"]
           total?: number
           updated_at?: string
+          whatsapp?: string
         }
         Relationships: []
       }

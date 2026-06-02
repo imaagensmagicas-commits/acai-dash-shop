@@ -36,10 +36,16 @@ export function CheckoutDialog({ open, onOpenChange }: { open: boolean; onOpenCh
         .from("orders")
         .insert({
           customer_name: name.trim(),
-          phone: phone.trim(),
+          whatsapp: phone.trim(),
           address: type === "entrega" ? address.trim() : null,
           notes: notes.trim() || null,
           delivery_type: type,
+          items_preview: items.map(i => ({
+            id: i.id,
+            name: i.name,
+            price: i.price,
+            quantity: i.quantity
+          })),
           total,
         })
         .select("id")
