@@ -108,10 +108,13 @@ function RootComponent() {
 
   useRegisterSW({
     onRegistered(r: ServiceWorkerRegistration | undefined) {
-      console.log('SW Registered: ' + r);
+      console.log('SW Registered: ', r);
+      if (r) {
+        r.update();
+      }
     },
     onRegisterError(error: any) {
-      console.log('SW registration error', error);
+      console.error('SW registration error', error);
     },
   });
 

@@ -26,7 +26,7 @@ interface AdminSidebarProps {
 export function AdminSidebar({ currentTab, setTab }: AdminSidebarProps) {
   const navigate = useNavigate();
   const { setOpenMobile } = useSidebar();
-  const { isInstallable, isIOS, install } = usePWAInstall();
+  const { isInstallable, isIOS, install, isInstalled } = usePWAInstall();
 
   const handleLogout = async () => {
     await supabase.auth.signOut();
@@ -107,16 +107,24 @@ export function AdminSidebar({ currentTab, setTab }: AdminSidebarProps) {
           </SidebarGroupContent>
         </SidebarGroup>
 
-        {(isInstallable || isIOS) && (
+        {(isInstallable || isIOS || isInstalled) && (
           <SidebarGroup>
             <SidebarGroupLabel className="px-4 text-[10px] uppercase tracking-widest">Aplicativo</SidebarGroupLabel>
             <SidebarGroupContent className="px-2">
               <SidebarMenuButton 
                 onClick={handleInstall}
-                className="flex items-center gap-3 rounded-xl px-4 py-6 bg-emerald-50 text-emerald-600 hover:bg-emerald-100 transition-all border border-emerald-100"
+                disabled={isInstalled}
+                className={cn(
+                  "flex items-center gap-3 rounded-xl px-4 py-6 transition-all border",
+                  isInstalled 
+                    ? "bg-slate-50 text-slate-400 border-slate-100 cursor-default"
+                    : "bg-emerald-50 text-emerald-600 hover:bg-emerald-100 border-emerald-100"
+                )}
               >
                 <Download className="h-5 w-5" />
-                <span className="font-medium">Instalar Aplicativo</span>
+                <span className="font-medium">
+                  {isInstalled ? "Aplicativo Instalado" : "Instalar Aplicativo"}
+                </span>
               </SidebarMenuButton>
             </SidebarGroupContent>
           </SidebarGroup>
