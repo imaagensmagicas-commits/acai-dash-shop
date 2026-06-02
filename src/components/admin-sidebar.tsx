@@ -1,4 +1,4 @@
-import { LayoutDashboard, ShoppingBag, Package, Settings, LogOut, ChevronRight, Link as LinkIcon, Download } from "lucide-react";
+import { LayoutDashboard, ShoppingBag, Package, Settings, LogOut, ChevronRight, Link as LinkIcon, Download, Tags, User } from "lucide-react";
 import { 
   Sidebar, 
   SidebarContent, 
@@ -37,10 +37,10 @@ export function AdminSidebar({ currentTab, setTab }: AdminSidebarProps) {
     { id: "dashboard", label: "Dashboard", icon: LayoutDashboard },
     { id: "orders", label: "Pedidos", icon: ShoppingBag },
     { id: "products", label: "Produtos", icon: Package },
-    { id: "categories", label: "Categorias", icon: Package },
+    { id: "categories", label: "Categorias", icon: Tags },
     { id: "store-link", label: "Minha Loja", icon: LinkIcon },
     { id: "settings", label: "Configurações", icon: Settings },
-    { id: "profile", label: "Perfil", icon: LogOut },
+    { id: "profile", label: "Perfil", icon: User },
   ];
 
   const handleTabChange = (tabId: string) => {
