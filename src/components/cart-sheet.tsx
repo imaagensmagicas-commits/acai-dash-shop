@@ -10,10 +10,38 @@ import { CheckoutDialog } from "./checkout-dialog";
 export function CartSheet() {
   const { items, setQty, remove, total, open, setOpen } = useCart();
   const [checkout, setCheckout] = useState(false);
+  const { isAdding } = useCart();
+
 
   return (
     <>
+      <AnimatePresence>
+        {!open && items.length > 0 && (
+          <motion.button
+            initial={{ opacity: 0, scale: 0.8, y: 20 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.8, y: 20 }}
+            whileTap={{ scale: 0.95 }}
+            onClick={() => setOpen(true)}
+            className="fixed bottom-6 right-6 z-40 flex h-16 w-16 items-center justify-center rounded-full bg-primary-gradient text-white shadow-elegant transition-transform hover:scale-105"
+          >
+            <div className="relative">
+              <ShoppingBag className="h-7 w-7" />
+              <motion.span
+                key={items.length}
+                initial={{ scale: 0.5, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                className="absolute -right-2 -top-2 flex h-6 w-6 items-center justify-center rounded-full bg-accent text-[10px] font-bold text-primary ring-2 ring-white"
+              >
+                {items.length}
+              </motion.span>
+            </div>
+          </motion.button>
+        )}
+      </AnimatePresence>
+
       <Sheet open={open} onOpenChange={setOpen}>
+
         <SheetContent className="flex w-full flex-col gap-0 p-0 sm:max-w-md">
           <SheetHeader className="border-b p-5">
             <SheetTitle className="flex items-center gap-2 font-display">
@@ -71,23 +99,30 @@ export function CartSheet() {
           </div>
 
           {items.length > 0 && (
-            <div className="space-y-3 border-t bg-surface p-5">
-              <div className="flex items-center justify-between text-sm">
-                <span className="text-muted-foreground">Total</span>
-                <span className="font-display text-2xl font-bold text-primary">{brl(total)}</span>
+            <div className="space-y-4 border-t bg-surface p-6">
+              <div className="space-y-2">
+                <div className="flex items-center justify-between text-sm text-muted-foreground">
+                  <span>Subtotal</span>
+                  <span>{brl(total)}</span>
+                </div>
+                <div className="flex items-center justify-between">
+                  <span className="font-display font-bold">Total</span>
+                  <span className="font-display text-3xl font-bold text-primary">{brl(total)}</span>
+                </div>
               </div>
               <Button
-                className="w-full bg-primary-gradient text-base shadow-elegant"
+                className="w-full bg-primary-gradient h-14 text-lg font-bold shadow-elegant rounded-xl"
                 size="lg"
                 onClick={() => {
                   setOpen(false);
                   setCheckout(true);
                 }}
               >
-                Finalizar pedido
+                Finalizar Pedido
               </Button>
             </div>
           )}
+
         </SheetContent>
       </Sheet>
       <CheckoutDialog open={checkout} onOpenChange={setCheckout} />
