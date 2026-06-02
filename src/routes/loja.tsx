@@ -19,8 +19,6 @@ export const Route = createFileRoute("/loja")({
   component: Home,
 });
 
-// Categories will be fetched from database
-
 function Home() {
   const [cat, setCat] = useState("all");
 
@@ -122,17 +120,17 @@ function Home() {
             <p className="mt-1 text-muted-foreground">Escolha o tamanho e o sabor</p>
           </div>
           <div className="flex flex-wrap gap-2">
-            {categories.map((c) => (
+            {categories.map((c: any) => (
               <button
-                key={c.key}
-                onClick={() => setCat(c.key)}
+                key={c.id || c.name}
+                onClick={() => setCat(c.name === "Todos" ? "all" : c.name)}
                 className={`rounded-full px-4 py-1.5 text-sm font-medium transition ${
-                  cat === c.key
+                  (cat === "all" && c.name === "Todos") || cat === c.name
                     ? "bg-primary text-primary-foreground shadow-md"
                     : "bg-secondary text-secondary-foreground hover:bg-accent"
                 }`}
               >
-                {c.label}
+                {c.name}
               </button>
             ))}
           </div>
