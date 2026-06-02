@@ -7,7 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import { Label } from "@/components/ui/label";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { brl, statusLabels } from "@/lib/format";
+import { brl, statusLabels, formatTimeAgo } from "@/lib/format";
 import { toast } from "sonner";
 import { motion, AnimatePresence } from "framer-motion";
 import { Input } from "@/components/ui/input";
@@ -375,17 +375,3 @@ export function OrdersPanel() {
 }
 
 
-function formatTimeAgo(date: Date) {
-  const seconds = Math.floor((new Date().getTime() - date.getTime()) / 1000);
-  let interval = seconds / 31536000;
-  if (interval > 1) return Math.floor(interval) + " anos";
-  interval = seconds / 2592000;
-  if (interval > 1) return Math.floor(interval) + " meses";
-  interval = seconds / 86400;
-  if (interval > 1) return Math.floor(interval) + " dias";
-  interval = seconds / 3600;
-  if (interval > 1) return Math.floor(interval) + "h";
-  interval = seconds / 60;
-  if (interval > 1) return Math.floor(interval) + " min";
-  return Math.floor(seconds) + " seg";
-}
