@@ -105,7 +105,6 @@ function RootShell({ children }: { children: ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
-  const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
 
   useRegisterSW({
     onRegistered(r: ServiceWorkerRegistration | undefined) {
@@ -116,39 +115,11 @@ function RootComponent() {
     },
   });
 
-  useEffect(() => {
-    const handler = (e: any) => {
-      e.preventDefault();
-      setDeferredPrompt(e);
-    };
-    window.addEventListener('beforeinstallprompt', handler);
-    return () => window.removeEventListener('beforeinstallprompt', handler);
-  }, []);
-
-  const handleInstall = async () => {
-    if (!deferredPrompt) return;
-    deferredPrompt.prompt();
-    const { outcome } = await deferredPrompt.userChoice;
-    if (outcome === 'accepted') {
-      setDeferredPrompt(null);
-    }
-  };
-
   return (
     <QueryClientProvider client={queryClient}>
       <CartProvider>
         <Outlet />
         <Toaster position="top-center" richColors />
-        {deferredPrompt && (
-          <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 animate-in fade-in slide-in-from-bottom-4 duration-500">
-            <button
-              onClick={handleInstall}
-              className="bg-primary-gradient text-white px-6 py-3 rounded-2xl shadow-2xl font-bold flex items-center gap-2 hover:scale-105 transition-transform"
-            >
-              <Download className="h-5 w-5" /> Instalar Aplicativo KL Admin
-            </button>
-          </div>
-        )}
       </CartProvider>
     </QueryClientProvider>
   );

@@ -1,4 +1,4 @@
-import { LayoutDashboard, ShoppingBag, Package, Settings, LogOut, ChevronRight, Menu, Link as LinkIcon } from "lucide-react";
+import { LayoutDashboard, ShoppingBag, Package, Settings, LogOut, ChevronRight, Link as LinkIcon, Download } from "lucide-react";
 import { 
   Sidebar, 
   SidebarContent, 
@@ -15,6 +15,8 @@ import {
 import { supabase } from "@/integrations/supabase/client";
 import { useNavigate } from "@tanstack/react-router";
 import { cn } from "@/lib/utils";
+import { usePWAInstall } from "@/hooks/use-pwa-install";
+import { toast } from "sonner";
 
 interface AdminSidebarProps {
   currentTab: string;
@@ -24,6 +26,7 @@ interface AdminSidebarProps {
 export function AdminSidebar({ currentTab, setTab }: AdminSidebarProps) {
   const navigate = useNavigate();
   const { setOpenMobile } = useSidebar();
+  const { isInstallable, isIOS, install } = usePWAInstall();
 
   const handleLogout = async () => {
     await supabase.auth.signOut();
@@ -41,6 +44,26 @@ export function AdminSidebar({ currentTab, setTab }: AdminSidebarProps) {
   const handleTabChange = (tabId: string) => {
     setTab(tabId);
     setOpenMobile(false);
+  };
+
+  const handleInstall = async () => {
+    if (isIOS) {
+      toast.info("Para instalar no iPhone:", {
+        description: "Toque no ícone de compartilhar (seta para cima) e selecione 'Adicionar à Tela de Início'.",
+        duration: 8000,
+      });
+      return;
+    }
+
+    try {
+      const result = await install();
+      if (result === 'accepted') {
+        toast.success("Aplicativo instalado com sucesso!");
+      }
+    } catch (error) {
+      toast.error("Erro ao instalar o aplicativo.");
+      console.error(error);
+    }
   };
 
   return (
@@ -81,6 +104,21 @@ export function AdminSidebar({ currentTab, setTab }: AdminSidebarProps) {
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
+
+        {(isInstallable || isIOS) && (
+          <SidebarGroup>
+            <SidebarGroupLabel className="px-4 text-[10px] uppercase tracking-widest">Aplicativo</SidebarGroupLabel>
+            <SidebarGroupContent className="px-2">
+              <SidebarMenuButton 
+                onClick={handleInstall}
+                className="flex items-center gap-3 rounded-xl px-4 py-6 bg-emerald-50 text-emerald-600 hover:bg-emerald-100 transition-all border border-emerald-100"
+              >
+                <Download className="h-5 w-5" />
+                <span className="font-medium">Instalar Aplicativo</span>
+              </SidebarMenuButton>
+            </SidebarGroupContent>
+          </SidebarGroup>
+        )}
       </SidebarContent>
 
       <SidebarFooter className="p-4">
