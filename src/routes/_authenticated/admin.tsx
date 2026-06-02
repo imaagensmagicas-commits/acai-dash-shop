@@ -218,7 +218,7 @@ function OrdersPanel() {
     },
   });
 
-  const setStatus = async (id: string, status: Order["status"]) => {
+  const setStatus = async (id: string, status: "novo" | "preparando" | "saiu_entrega" | "finalizado" | "cancelado") => {
     const { error } = await supabase.from("orders").update({ status }).eq("id", id);
     if (error) return toast.error(error.message);
     toast.success("Status atualizado");
