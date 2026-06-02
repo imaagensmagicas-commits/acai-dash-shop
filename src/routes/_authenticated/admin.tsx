@@ -123,7 +123,7 @@ function OrdersPanel() {
     refetchInterval: 3000
   });
 
-  const updateStatus = async (id: string, status: string) => {
+  const updateStatus = async (id: string, status: any) => {
     const { error } = await supabase.from("orders").update({ status }).eq("id", id);
     if (error) return toast.error(error.message);
     toast.success(`Status atualizado para ${statusLabels[status]}`);
