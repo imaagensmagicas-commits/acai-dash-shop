@@ -37,6 +37,27 @@ function AdminPage() {
     })();
   }, []);
 
+  useEffect(() => {
+    const channel = supabase
+      .channel('schema-db-changes')
+      .on(
+        'postgres_changes',
+        { event: 'INSERT', schema: 'public', table: 'orders' },
+        (payload) => {
+          toast.info("Novo pedido recebido!", {
+            description: `Pedido ${payload.new.order_number} de ${payload.new.customer_name}`,
+            action: {
+              label: "Ver pedido",
+              onClick: () => setCurrentTab("orders")
+            }
+          });
+          // Play a subtle sound if possible or just visual feedback
+        }
+      )
+      .subscribe();
+    return () => { supabase.removeChannel(channel); };
+  }, []);
+
   if (isAdmin === null) return <div className="grid min-h-screen place-items-center"><Loader2 className="h-10 w-10 animate-spin text-primary" /></div>;
 
   if (!isAdmin) {
