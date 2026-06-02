@@ -49,6 +49,33 @@ export function ProductsPanel() {
   const [editing, setEditing] = useState<any | null>(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [isDeleting, setIsDeleting] = useState<string | null>(null);
+  const [uploading, setUploading] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const handleImageUpload = async (file: File) => {
+    if (!file.type.startsWith("image/")) {
+      toast.error("Selecione um arquivo de imagem.");
+      return;
+    }
+    setUploading(true);
+    try {
+      const prev = extractStoragePath(editing?.image_url);
+      const url = await uploadProductImage(file);
+      setEditing((prevEd: any) => ({ ...prevEd, image_url: url }));
+      if (prev) await supabase.storage.from("product-images").remove([prev]);
+      toast.success("Imagem enviada!");
+    } catch (err: any) {
+      toast.error(err.message ?? "Falha no upload");
+    } finally {
+      setUploading(false);
+    }
+  };
+
+  const removeImage = async () => {
+    const prev = extractStoragePath(editing?.image_url);
+    if (prev) await supabase.storage.from("product-images").remove([prev]);
+    setEditing({ ...editing, image_url: "" });
+  };
 
   const { data: products = [], isLoading } = useQuery({
     queryKey: ["admin-products"],
