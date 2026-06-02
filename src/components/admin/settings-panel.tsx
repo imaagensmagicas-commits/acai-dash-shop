@@ -55,6 +55,9 @@ export function SettingsPanel() {
       whatsapp_number: formData.get("whatsapp") as string,
       opening_time: formData.get("opening_time") as string,
       closing_time: formData.get("closing_time") as string,
+      address: formData.get("address") as string,
+      delivery_fee: Number(formData.get("delivery_fee")),
+      primary_color: formData.get("primary_color") as string,
     };
     updateMutation.mutate(values);
   };
@@ -148,9 +151,20 @@ export function SettingsPanel() {
                 </div>
               </div>
 
+              <div className="grid md:grid-cols-2 gap-6">
+                <div className="space-y-2">
+                  <Label htmlFor="address" className="text-[10px] uppercase font-black tracking-widest text-muted-foreground">Endereço da Loja</Label>
+                  <Input id="address" name="address" defaultValue={storeSettings?.address || ""} className="rounded-xl border-slate-100 bg-slate-50" placeholder="Rua Exemplo, 123 - Centro" />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="delivery_fee" className="text-[10px] uppercase font-black tracking-widest text-muted-foreground">Taxa de Entrega (R$)</Label>
+                  <Input id="delivery_fee" name="delivery_fee" type="number" step="0.01" defaultValue={storeSettings?.delivery_fee || 0} className="rounded-xl border-slate-100 bg-slate-50" />
+                </div>
+              </div>
+
               <div className="space-y-2">
-                <Label className="text-[10px] uppercase font-black tracking-widest text-muted-foreground">Horário de Funcionamento</Label>
-                <div className="grid grid-cols-2 gap-4">
+                <Label className="text-[10px] uppercase font-black tracking-widest text-muted-foreground">Horário de Funcionamento e Cor Principal</Label>
+                <div className="grid grid-cols-3 gap-4">
                   <div className="relative">
                     <span className="absolute left-3 top-1/2 -translate-y-1/2 text-[10px] font-bold text-muted-foreground uppercase">Abre</span>
                     <Input name="opening_time" defaultValue={storeSettings?.opening_time || ""} className="rounded-xl border-slate-100 bg-slate-50 pl-14" />
@@ -158,6 +172,10 @@ export function SettingsPanel() {
                   <div className="relative">
                     <span className="absolute left-3 top-1/2 -translate-y-1/2 text-[10px] font-bold text-muted-foreground uppercase">Fecha</span>
                     <Input name="closing_time" defaultValue={storeSettings?.closing_time || ""} className="rounded-xl border-slate-100 bg-slate-50 pl-14" />
+                  </div>
+                  <div className="relative">
+                    <span className="absolute left-3 top-1/2 -translate-y-1/2 text-[10px] font-bold text-muted-foreground uppercase">Cor</span>
+                    <Input name="primary_color" type="color" defaultValue={storeSettings?.primary_color || "#7c3aed"} className="rounded-xl border-slate-100 bg-slate-50 pl-14 h-10 p-1" />
                   </div>
                 </div>
               </div>
