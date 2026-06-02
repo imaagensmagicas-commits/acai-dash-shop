@@ -12,5 +12,9 @@ function RedirectToStore() {
     navigate({ to: "/loja", replace: true });
   }, [navigate]);
 
-  return null;
+  return (
+    <div className="flex min-h-screen items-center justify-center">
+      <p className="text-muted-foreground animate-pulse">Redirecionando para a loja...</p>
+    </div>
+  );
 }
