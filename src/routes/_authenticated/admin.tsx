@@ -5,7 +5,7 @@ import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
-import { SidebarProvider, SidebarInset } from "@/components/ui/sidebar";
+import { SidebarProvider, SidebarInset, SidebarTrigger } from "@/components/ui/sidebar";
 import { AdminSidebar } from "@/components/admin-sidebar";
 import { Dashboard } from "@/components/admin/dashboard";
 import { OrdersPanel } from "@/components/admin/orders-panel";
@@ -14,6 +14,7 @@ import { SettingsPanel } from "@/components/admin/settings-panel";
 import { StoreLinkSection } from "@/components/admin/store-link";
 import { CategoriesPanel } from "@/components/admin/categories-panel";
 import { ProfilePanel } from "@/components/admin/profile-panel";
+import { Menu, ChevronLeft } from "lucide-react";
 
 export const Route = createFileRoute("/_authenticated/admin")({
   head: () => ({ 
@@ -118,17 +119,42 @@ function AdminPage() {
     );
   }
 
+  const tabLabels: Record<string, string> = {
+    dashboard: "Dashboard",
+    orders: "Pedidos",
+    products: "Produtos",
+    categories: "Categorias",
+    "store-link": "Minha Loja",
+    settings: "Configurações",
+    profile: "Perfil"
+  };
+
   return (
-    <SidebarProvider defaultOpen={false}>
+    <SidebarProvider defaultOpen={true}>
       <AdminSidebar currentTab={currentTab} setTab={setCurrentTab} />
       <SidebarInset className="min-h-screen bg-surface">
-        <div className="p-0 md:p-8 max-w-7xl mx-auto w-full">
+        {/* Mobile & Desktop Header */}
+        <header className="sticky top-0 z-10 flex h-16 items-center gap-4 border-b bg-white px-4 md:px-8 shadow-sm">
+          <SidebarTrigger className="flex md:hidden" />
+          <div className="flex flex-1 items-center justify-between">
+            <h2 className="font-display text-lg font-bold text-slate-800 md:text-xl">
+              {tabLabels[currentTab]}
+            </h2>
+            <Button variant="outline" size="sm" asChild className="rounded-xl border-slate-200 text-xs md:text-sm">
+              <a href="/loja" target="_blank" className="flex items-center gap-2">
+                <ChevronLeft className="h-4 w-4" /> Ver Loja
+              </a>
+            </Button>
+          </div>
+        </header>
+
+        <div className="p-4 md:p-8 max-w-7xl mx-auto w-full">
           <motion.div 
             key={currentTab}
             initial={{ opacity: 0, x: 20 }} 
             animate={{ opacity: 1, x: 0 }} 
             transition={{ type: "spring", stiffness: 300, damping: 30 }}
-            className="h-full min-h-[calc(100vh-4rem)] p-4 md:p-0"
+            className="h-full min-h-[calc(100vh-8rem)]"
           >
             {currentTab === "dashboard" && <Dashboard />}
             {currentTab === "orders" && <OrdersPanel />}
