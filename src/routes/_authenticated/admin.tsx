@@ -117,16 +117,16 @@ function AdminPage() {
   }
 
   return (
-    <SidebarProvider defaultOpen={true}>
+    <SidebarProvider defaultOpen={false}>
       <AdminSidebar currentTab={currentTab} setTab={setCurrentTab} />
       <SidebarInset className="min-h-screen bg-surface">
-        <div className="p-4 md:p-8 max-w-7xl mx-auto w-full">
+        <div className="p-0 md:p-8 max-w-7xl mx-auto w-full">
           <motion.div 
             key={currentTab}
             initial={{ opacity: 0, x: 20 }} 
             animate={{ opacity: 1, x: 0 }} 
             transition={{ type: "spring", stiffness: 300, damping: 30 }}
-            className="h-full"
+            className="h-full min-h-[calc(100vh-4rem)] p-4 md:p-0"
           >
             {currentTab === "dashboard" && <Dashboard />}
             {currentTab === "orders" && <OrdersPanel />}
