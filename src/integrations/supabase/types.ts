@@ -14,6 +14,30 @@ export type Database = {
   }
   public: {
     Tables: {
+      categories: {
+        Row: {
+          created_at: string | null
+          id: string
+          name: string
+          order_index: number | null
+          updated_at: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          name: string
+          order_index?: number | null
+          updated_at?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          name?: string
+          order_index?: number | null
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
       order_items: {
         Row: {
           created_at: string
@@ -110,7 +134,7 @@ export type Database = {
       products: {
         Row: {
           active: boolean
-          category: Database["public"]["Enums"]["product_category"]
+          category: string
           created_at: string
           description: string | null
           id: string
@@ -121,7 +145,7 @@ export type Database = {
         }
         Insert: {
           active?: boolean
-          category: Database["public"]["Enums"]["product_category"]
+          category: string
           created_at?: string
           description?: string | null
           id?: string
@@ -132,7 +156,7 @@ export type Database = {
         }
         Update: {
           active?: boolean
-          category?: Database["public"]["Enums"]["product_category"]
+          category?: string
           created_at?: string
           description?: string | null
           id?: string
@@ -143,39 +167,75 @@ export type Database = {
         }
         Relationships: []
       }
+      profiles: {
+        Row: {
+          avatar_url: string | null
+          created_at: string | null
+          display_name: string | null
+          id: string
+          updated_at: string | null
+          user_id: string
+        }
+        Insert: {
+          avatar_url?: string | null
+          created_at?: string | null
+          display_name?: string | null
+          id?: string
+          updated_at?: string | null
+          user_id: string
+        }
+        Update: {
+          avatar_url?: string | null
+          created_at?: string | null
+          display_name?: string | null
+          id?: string
+          updated_at?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
       store_settings: {
         Row: {
+          address: string | null
           closing_time: string | null
           created_at: string
+          delivery_fee: number | null
           id: string
           is_open: boolean | null
           logo_url: string | null
           name: string
           opening_time: string | null
+          primary_color: string | null
           slug: string
           updated_at: string
           whatsapp_number: string | null
         }
         Insert: {
+          address?: string | null
           closing_time?: string | null
           created_at?: string
+          delivery_fee?: number | null
           id?: string
           is_open?: boolean | null
           logo_url?: string | null
           name: string
           opening_time?: string | null
+          primary_color?: string | null
           slug: string
           updated_at?: string
           whatsapp_number?: string | null
         }
         Update: {
+          address?: string | null
           closing_time?: string | null
           created_at?: string
+          delivery_fee?: number | null
           id?: string
           is_open?: boolean | null
           logo_url?: string | null
           name?: string
           opening_time?: string | null
+          primary_color?: string | null
           slug?: string
           updated_at?: string
           whatsapp_number?: string | null
