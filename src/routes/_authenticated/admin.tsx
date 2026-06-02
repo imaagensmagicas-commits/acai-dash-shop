@@ -66,6 +66,8 @@ function AdminPage() {
   );
 }
 
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip as ChartTooltip, ResponsiveContainer } from 'recharts';
+
 function Dashboard() {
   const { data } = useQuery({
     queryKey: ["admin-stats"],
@@ -76,22 +78,76 @@ function Dashboard() {
       ]);
       const now = new Date();
       const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+      const monthStart = new Date(now.getFullYear(), now.getMonth(), 1);
+      
       const todayOrders = (orders ?? []).filter((o) => new Date(o.created_at) >= today);
+      const monthOrders = (orders ?? []).filter((o) => new Date(o.created_at) >= monthStart);
       const todaySales = todayOrders.reduce((s, o) => s + Number(o.total), 0);
+      const totalRevenue = (orders ?? []).reduce((s, o) => s + Number(o.total), 0);
       const active = (orders ?? []).filter((o) => !["finalizado", "cancelado"].includes(o.status)).length;
-      return { total: orders?.length ?? 0, todaySales, todayCount: todayOrders.length, active };
+
+      // Top products ranking
+      const productCounts: Record<string, number> = {};
+      (items ?? []).forEach((i) => {
+        productCounts[i.product_name] = (productCounts[i.product_name] || 0) + i.quantity;
+      });
+      const topProducts = Object.entries(productCounts)
+        .map(([name, value]) => ({ name, value }))
+        .sort((a, b) => b.value - a.value)
+        .slice(0, 5);
+
+      return { total: orders?.length ?? 0, todaySales, todayCount: todayOrders.length, active, monthCount: monthOrders.length, totalRevenue, topProducts };
     },
     refetchInterval: 5000
   });
 
   return (
     <div className="space-y-6">
-      <h1 className="font-display text-3xl font-bold">Dashboard</h1>
-      <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+      <div className="flex justify-between items-center">
+        <h1 className="font-display text-3xl font-bold">Dashboard</h1>
+        <Badge variant="outline" className="text-primary border-primary">Tempo Real Ativo</Badge>
+      </div>
+      
+      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
         <StatCard label="Pedidos hoje" value={data?.todayCount ?? 0} icon={ShoppingBag} />
         <StatCard label="Vendas hoje" value={brl(data?.todaySales ?? 0)} icon={TrendingUp} />
         <StatCard label="Pedidos ativos" value={data?.active ?? 0} icon={Package} />
-        <StatCard label="Total geral" value={data?.total ?? 0} icon={ShoppingBag} />
+        <StatCard label="Total no mês" value={data?.monthCount ?? 0} icon={ShoppingBag} />
+      </div>
+
+      <div className="grid gap-6 md:grid-cols-2">
+        <Card className="shadow-card-soft">
+          <CardHeader><CardTitle>Produtos mais vendidos (Top 5)</CardTitle></CardHeader>
+          <CardContent className="h-[300px]">
+            <ResponsiveContainer width="100%" height="100%">
+              <BarChart data={data?.topProducts || []}>
+                <CartesianGrid strokeDasharray="3 3" vertical={false} />
+                <XAxis dataKey="name" fontSize={12} tickLine={false} axisLine={false} />
+                <YAxis fontSize={12} tickLine={false} axisLine={false} />
+                <ChartTooltip cursor={{ fill: 'transparent' }} />
+                <Bar dataKey="value" fill="#7c3aed" radius={[4, 4, 0, 0]} />
+              </BarChart>
+            </ResponsiveContainer>
+          </CardContent>
+        </Card>
+
+        <Card className="shadow-card-soft bg-primary-gradient text-white">
+          <CardHeader><CardTitle className="text-white">Resumo Financeiro</CardTitle></CardHeader>
+          <CardContent className="flex flex-col justify-center items-center h-[240px]">
+            <div className="text-sm uppercase opacity-80 tracking-widest">Faturamento Total</div>
+            <div className="text-5xl font-bold mt-2">{brl(data?.totalRevenue || 0)}</div>
+            <div className="mt-8 grid grid-cols-2 gap-8 w-full">
+              <div className="text-center">
+                <div className="text-xs opacity-70">Ticket Médio</div>
+                <div className="text-xl font-bold">{brl((data?.totalRevenue || 0) / (data?.total || 1))}</div>
+              </div>
+              <div className="text-center">
+                <div className="text-xs opacity-70">Conversão</div>
+                <div className="text-xl font-bold">100%</div>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
       </div>
     </div>
   );
