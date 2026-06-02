@@ -9,7 +9,7 @@ function RedirectToAdmin() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    navigate({ to: "/admin", replace: true });
+    navigate({ to: "/loja", replace: true });
   }, [navigate]);
 
   return (

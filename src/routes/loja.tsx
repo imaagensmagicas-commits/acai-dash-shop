@@ -154,9 +154,8 @@ function Home() {
       </section>
 
       <footer className="border-t bg-surface py-8">
-        <div className="container mx-auto flex flex-col items-center justify-between gap-3 px-4 text-sm text-muted-foreground sm:flex-row">
+        <div className="container mx-auto flex flex-col items-center justify-center gap-3 px-4 text-sm text-muted-foreground sm:flex-row">
           <p>© {new Date().getFullYear()} {storeSettings?.name || "KL Açaí"}. Todos os direitos reservados.</p>
-          <Link to="/auth" className="hover:text-primary">Área administrativa</Link>
         </div>
       </footer>
 
