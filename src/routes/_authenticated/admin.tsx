@@ -88,7 +88,6 @@ function AdminPage() {
   );
 }
 
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip as ChartTooltip, ResponsiveContainer } from 'recharts';
 
 function Dashboard() {
   const { data } = useQuery({
