@@ -105,7 +105,7 @@ export function AdminSidebar({ currentTab, setTab }: AdminSidebarProps) {
           </SidebarGroupContent>
         </SidebarGroup>
 
-        {isInstallable && (
+        {(isInstallable || isIOS) && (
           <SidebarGroup>
             <SidebarGroupLabel className="px-4 text-[10px] uppercase tracking-widest">Aplicativo</SidebarGroupLabel>
             <SidebarGroupContent className="px-2">
