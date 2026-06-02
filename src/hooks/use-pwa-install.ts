@@ -3,8 +3,14 @@ import { useState, useEffect } from 'react';
 export function usePWAInstall() {
   const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
   const [isInstallable, setIsInstallable] = useState(false);
+  const [isIOS, setIsIOS] = useState(false);
 
   useEffect(() => {
+    // Check if iOS
+    const userAgent = window.navigator.userAgent.toLowerCase();
+    const isIosDevice = /iphone|ipad|ipod/.test(userAgent);
+    setIsIOS(isIosDevice);
+
     const handler = (e: any) => {
       e.preventDefault();
       setDeferredPrompt(e);
@@ -23,6 +29,10 @@ export function usePWAInstall() {
   }, []);
 
   const install = async () => {
+    if (isIOS) {
+      return 'ios-instructions';
+    }
+
     if (!deferredPrompt) return;
 
     deferredPrompt.prompt();
@@ -32,7 +42,8 @@ export function usePWAInstall() {
       setDeferredPrompt(null);
       setIsInstallable(false);
     }
+    return outcome;
   };
 
-  return { isInstallable, install };
+  return { isInstallable, isIOS, install };
 }
