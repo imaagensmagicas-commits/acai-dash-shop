@@ -64,6 +64,15 @@
   --border: oklch(0.9 0.015 300);
   --input: oklch(0.92 0.015 300);
   --ring: oklch(0.45 0.18 305);
+  
+  --sidebar: oklch(1 0 0);
+  --sidebar-foreground: oklch(0.18 0.04 300);
+  --sidebar-primary: oklch(0.32 0.13 305);
+  --sidebar-primary-foreground: oklch(0.98 0.01 80);
+  --sidebar-accent: oklch(0.95 0.012 300);
+  --sidebar-accent-foreground: oklch(0.25 0.08 305);
+  --sidebar-border: oklch(0.9 0.015 300);
+  --sidebar-ring: oklch(0.45 0.18 305);
 
   --gradient-hero: linear-gradient(135deg, oklch(0.25 0.13 305) 0%, oklch(0.45 0.2 310) 50%, oklch(0.55 0.18 320) 100%);
   --gradient-primary: linear-gradient(135deg, oklch(0.32 0.13 305), oklch(0.5 0.2 310));
