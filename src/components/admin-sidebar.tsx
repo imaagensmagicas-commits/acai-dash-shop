@@ -26,7 +26,7 @@ interface AdminSidebarProps {
 export function AdminSidebar({ currentTab, setTab }: AdminSidebarProps) {
   const navigate = useNavigate();
   const { setOpenMobile } = useSidebar();
-  const { isInstallable, install } = usePWAInstall();
+  const { isInstallable, isIOS, install } = usePWAInstall();
 
   const handleLogout = async () => {
     await supabase.auth.signOut();
@@ -40,8 +40,6 @@ export function AdminSidebar({ currentTab, setTab }: AdminSidebarProps) {
     { id: "store-link", label: "Link da Loja", icon: LinkIcon },
     { id: "settings", label: "Configurações", icon: Settings },
   ];
-
-  const { isInstallable, isIOS, install } = usePWAInstall();
 
   const handleTabChange = (tabId: string) => {
     setTab(tabId);
