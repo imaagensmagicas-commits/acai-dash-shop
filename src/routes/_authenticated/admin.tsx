@@ -215,16 +215,6 @@ function OrdersPanel() {
       return (data as unknown) as Order[];
     },
   });
-  const { data: itemsByOrder = {} } = useQuery({
-    queryKey: ["admin-order-items"],
-    queryFn: async () => {
-      const { data, error } = await supabase.from("order_items").select("*");
-      if (error) throw error;
-      const map: Record<string, OrderItem[]> = {};
-      (data as OrderItem[]).forEach((i) => { (map[i.order_id] ??= []).push(i); });
-      return map;
-    },
-  });
 
   const setStatus = async (id: string, status: "novo" | "preparando" | "saiu_entrega" | "finalizado" | "cancelado") => {
     const { error } = await supabase.from("orders").update({ status }).eq("id", id);
