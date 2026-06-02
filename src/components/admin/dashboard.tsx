@@ -19,14 +19,18 @@ export function Dashboard() {
       const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
       const monthStart = new Date(now.getFullYear(), now.getMonth(), 1);
       
-      const todayOrders = (orders ?? []).filter((o) => new Date(o.created_at) >= today);
-      const monthOrders = (orders ?? []).filter((o) => new Date(o.created_at) >= monthStart);
+      const ordersSafe = orders ?? [];
+      const itemsSafe = items ?? [];
+
+      const todayOrders = ordersSafe.filter((o) => new Date(o.created_at) >= today);
+      const monthOrders = ordersSafe.filter((o) => new Date(o.created_at) >= monthStart);
+      
       const todaySales = todayOrders.reduce((s, o) => s + Number(o.total), 0);
-      const totalRevenue = (orders ?? []).reduce((s, o) => s + Number(o.total), 0);
-      const active = (orders ?? []).filter((o) => !["finalizado", "cancelado"].includes(o.status)).length;
+      const totalRevenue = ordersSafe.reduce((s, o) => s + Number(o.total), 0);
+      const active = ordersSafe.filter((o) => !["finalizado", "cancelado"].includes(o.status)).length;
 
       const productCounts: Record<string, number> = {};
-      (items ?? []).forEach((i) => {
+      itemsSafe.forEach((i) => {
         productCounts[i.product_name] = (productCounts[i.product_name] || 0) + i.quantity;
       });
       const topProducts = Object.entries(productCounts)
@@ -34,7 +38,7 @@ export function Dashboard() {
         .sort((a, b) => b.value - a.value)
         .slice(0, 5);
 
-      return { total: orders?.length ?? 0, todaySales, todayCount: todayOrders.length, active, monthCount: monthOrders.length, totalRevenue, topProducts };
+      return { total: ordersSafe.length, todaySales, todayCount: todayOrders.length, active, monthCount: monthOrders.length, totalRevenue, topProducts };
     },
     refetchInterval: 5000
   });
