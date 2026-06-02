@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">KL Açaí Admin</string>
+    <string name="title_activity_main">KL Açaí Admin</string>
+    <string name="package_name">com.klacai.admin</string>
+    <string name="custom_url_scheme">com.klacai.admin</string>
+</resources>
