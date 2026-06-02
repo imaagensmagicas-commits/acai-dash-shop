@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { Plus, Edit3, Trash2, Search, Package, Image as ImageIcon, Eye, EyeOff } from "lucide-react";
+import { Plus, Edit3, Trash2, Search, Package, Image as ImageIcon, Upload, X, Loader2 } from "lucide-react";
+import imageCompression from "browser-image-compression";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -14,6 +15,34 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Switch } from "@/components/ui/switch";
 import { Card, CardContent } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
+
+const SIGNED_URL_EXPIRY = 60 * 60 * 24 * 365 * 10; // 10 years
+
+async function uploadProductImage(file: File): Promise<string> {
+  const compressed = await imageCompression(file, {
+    maxSizeMB: 0.5,
+    maxWidthOrHeight: 1200,
+    useWebWorker: true,
+    fileType: "image/webp",
+  });
+  const ext = "webp";
+  const path = `${crypto.randomUUID()}.${ext}`;
+  const { error: upErr } = await supabase.storage
+    .from("product-images")
+    .upload(path, compressed, { contentType: "image/webp", upsert: false });
+  if (upErr) throw upErr;
+  const { data, error } = await supabase.storage
+    .from("product-images")
+    .createSignedUrl(path, SIGNED_URL_EXPIRY);
+  if (error || !data) throw error ?? new Error("Falha ao gerar URL");
+  return data.signedUrl;
+}
+
+function extractStoragePath(url: string | null | undefined): string | null {
+  if (!url) return null;
+  const m = url.match(/product-images\/([^?]+)/);
+  return m ? decodeURIComponent(m[1]) : null;
+}
 
 export function ProductsPanel() {
   const qc = useQueryClient();
