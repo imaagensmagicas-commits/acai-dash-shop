@@ -159,6 +159,80 @@ function OrdersPanel() {
 }
 
 function ProductsPanel() {
-  // Product logic implementation (simplified for now but functional)
-  return <div className="text-muted-foreground">Área de gestão de produtos em desenvolvimento...</div>;
+  const qc = useQueryClient();
+  const [editing, setEditing] = useState<any | null>(null);
+  const { data: products = [] } = useQuery({
+    queryKey: ["admin-products"],
+    queryFn: async () => {
+      const { data } = await supabase.from("products").select("*").order("name");
+      return data ?? [];
+    },
+  });
+
+  const saveProduct = async (e: React.FormEvent) => {
+    e.preventDefault();
+    const { error } = editing.id
+      ? await supabase.from("products").update(editing).eq("id", editing.id)
+      : await supabase.from("products").insert(editing);
+    if (error) return toast.error(error.message);
+    toast.success("Salvo com sucesso!");
+    setEditing(null);
+    qc.invalidateQueries({ queryKey: ["admin-products"] });
+  };
+
+  return (
+    <div className="space-y-6">
+      <div className="flex justify-between items-center">
+        <h1 className="font-display text-3xl font-bold">Produtos</h1>
+        <Button onClick={() => setEditing({ name: "", price: 0, category: "300ml", active: true })} className="bg-primary-gradient">
+          <Plus className="mr-2 h-4 w-4" /> Novo Produto
+        </Button>
+      </div>
+
+      <div className="rounded-2xl bg-card border shadow-sm p-4">
+        <table className="w-full text-sm">
+          <thead>
+            <tr className="border-b text-left text-muted-foreground">
+              <th className="p-3">Nome</th>
+              <th className="p-3">Preço</th>
+              <th className="p-3">Ações</th>
+            </tr>
+          </thead>
+          <tbody>
+            {products.map((p: any) => (
+              <tr key={p.id} className="border-b">
+                <td className="p-3 font-medium">{p.name}</td>
+                <td className="p-3">{brl(Number(p.price))}</td>
+                <td className="p-3 flex gap-2">
+                  <Button variant="ghost" size="icon" onClick={() => setEditing(p)}><Edit3 className="h-4 w-4" /></Button>
+                  <Button variant="ghost" size="icon" onClick={async () => { await supabase.from("products").delete().eq("id", p.id); qc.invalidateQueries({ queryKey: ["admin-products"] }); }}><Trash2 className="h-4 w-4 text-destructive" /></Button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      <Dialog open={!!editing} onOpenChange={() => setEditing(null)}>
+        <DialogContent>
+          <DialogHeader><DialogTitle>{editing?.id ? "Editar Produto" : "Novo Produto"}</DialogTitle></DialogHeader>
+          <form onSubmit={saveProduct} className="space-y-4">
+            <Input placeholder="Nome" value={editing?.name ?? ""} onChange={(e) => setEditing({...editing, name: e.target.value})} required />
+            <Input type="number" placeholder="Preço" value={editing?.price ?? 0} onChange={(e) => setEditing({...editing, price: Number(e.target.value)})} required />
+            <Select value={editing?.category} onValueChange={(v) => setEditing({...editing, category: v})}>
+              <SelectTrigger><SelectValue /></SelectTrigger>
+              <SelectContent>
+                <SelectItem value="300ml">300ml</SelectItem>
+                <SelectItem value="500ml">500ml</SelectItem>
+                <SelectItem value="especial">Especial</SelectItem>
+              </SelectContent>
+            </Select>
+            <DialogFooter>
+              <Button type="submit" className="bg-primary-gradient">Salvar</Button>
+            </DialogFooter>
+          </form>
+        </DialogContent>
+      </Dialog>
+    </div>
+  );
 }
