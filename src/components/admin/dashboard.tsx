@@ -79,23 +79,29 @@ export function Dashboard() {
                     fontSize={11} 
                     tickLine={false} 
                     axisLine={false} 
-                    tick={{ fill: '#64748b' }}
+                    tick={{ fill: '#64748b', fontWeight: 600 }}
                   />
                   <YAxis 
                     fontSize={11} 
                     tickLine={false} 
                     axisLine={false} 
-                    tick={{ fill: '#64748b' }}
+                    tick={{ fill: '#64748b', fontWeight: 600 }}
                   />
                   <ChartTooltip 
                     cursor={{ fill: '#f8fafc' }}
-                    contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 10px 15px -3px rgb(0 0 0 / 0.1)' }}
+                    contentStyle={{ borderRadius: '16px', border: 'none', boxShadow: '0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1)', padding: '12px' }}
                   />
-                  <Bar dataKey="value" fill="url(#colorPurple)" radius={[6, 6, 0, 0]} />
+                  <Bar 
+                    dataKey="value" 
+                    fill="url(#colorPurple)" 
+                    radius={[8, 8, 0, 0]} 
+                    animationDuration={1500}
+                    animationEasing="ease-out"
+                  />
                   <defs>
                     <linearGradient id="colorPurple" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="5%" stopColor="#7c3aed" stopOpacity={0.8}/>
-                      <stop offset="95%" stopColor="#7c3aed" stopOpacity={0.4}/>
+                      <stop offset="5%" stopColor="#7c3aed" stopOpacity={1}/>
+                      <stop offset="95%" stopColor="#7c3aed" stopOpacity={0.6}/>
                     </linearGradient>
                   </defs>
                 </BarChart>
@@ -140,17 +146,23 @@ function StatCard({ label, value, icon: Icon, delay }: any) {
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ delay }}
+      transition={{ delay, type: "spring", stiffness: 100, damping: 20 }}
     >
-      <Card className="shadow-card-soft border-none hover:shadow-elegant transition-shadow duration-300">
+      <Card className="shadow-card-soft border-none hover:shadow-elegant transition-all duration-300 group">
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-          <CardTitle className="text-sm font-medium text-muted-foreground uppercase tracking-wider">{label}</CardTitle>
-          <div className="h-8 w-8 rounded-lg bg-primary/10 flex items-center justify-center">
-            <Icon className="h-4 w-4 text-primary" />
+          <CardTitle className="text-sm font-medium text-muted-foreground uppercase tracking-widest">{label}</CardTitle>
+          <div className="h-10 w-10 rounded-xl bg-primary/5 text-primary flex items-center justify-center group-hover:bg-primary-gradient group-hover:text-white transition-colors duration-300">
+            <Icon className="h-5 w-5" />
           </div>
         </CardHeader>
         <CardContent>
-          <div className="text-3xl font-bold tracking-tight">{value}</div>
+          <motion.div 
+            initial={{ scale: 0.8 }}
+            animate={{ scale: 1 }}
+            className="text-3xl font-black tracking-tight text-slate-800"
+          >
+            {value}
+          </motion.div>
         </CardContent>
       </Card>
     </motion.div>

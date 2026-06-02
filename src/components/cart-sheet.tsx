@@ -23,18 +23,22 @@ export function CartSheet() {
             exit={{ opacity: 0, scale: 0.8, y: 20 }}
             whileTap={{ scale: 0.95 }}
             onClick={() => setOpen(true)}
-            className="fixed bottom-6 right-6 z-40 flex h-16 w-16 items-center justify-center rounded-full bg-primary-gradient text-white shadow-elegant transition-transform hover:scale-105"
+            className="fixed bottom-6 right-6 z-40 flex h-16 w-16 items-center justify-center rounded-full bg-primary-gradient text-white shadow-elegant transition-all hover:scale-110 active:scale-95"
           >
             <div className="relative">
               <ShoppingBag className="h-7 w-7" />
-              <motion.span
-                key={items.length}
-                initial={{ scale: 0.5, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                className="absolute -right-2 -top-2 flex h-6 w-6 items-center justify-center rounded-full bg-accent text-[10px] font-bold text-primary ring-2 ring-white"
-              >
-                {items.length}
-              </motion.span>
+              <AnimatePresence>
+                <motion.span
+                  key={items.length}
+                  initial={{ scale: 0, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  exit={{ scale: 0, opacity: 0 }}
+                  transition={{ type: "spring", stiffness: 500, damping: 15 }}
+                  className="absolute -right-2 -top-2 flex h-6 w-6 items-center justify-center rounded-full bg-accent text-[10px] font-black text-primary ring-2 ring-white shadow-lg"
+                >
+                  {items.length}
+                </motion.span>
+              </AnimatePresence>
             </div>
           </motion.button>
         )}
@@ -63,10 +67,11 @@ export function CartSheet() {
                     <motion.li
                       key={i.id}
                       layout
-                      initial={{ opacity: 0, x: 20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      exit={{ opacity: 0, x: -20 }}
-                      className="flex items-center gap-3 rounded-xl border bg-card p-3"
+                      initial={{ opacity: 0, x: 20, scale: 0.95 }}
+                      animate={{ opacity: 1, x: 0, scale: 1 }}
+                      exit={{ opacity: 0, x: -20, scale: 0.95 }}
+                      transition={{ type: "spring", stiffness: 400, damping: 30 }}
+                      className="flex items-center gap-3 rounded-2xl border border-slate-100 bg-white p-3 shadow-sm hover:shadow-md transition-shadow"
                     >
                       <div className="grid h-14 w-14 shrink-0 place-items-center rounded-lg bg-primary-gradient text-2xl">
                         {i.image_url ? (
@@ -107,7 +112,14 @@ export function CartSheet() {
                 </div>
                 <div className="flex items-center justify-between">
                   <span className="font-display font-bold">Total</span>
-                  <span className="font-display text-3xl font-bold text-primary">{brl(total)}</span>
+                  <motion.span 
+                    key={total}
+                    initial={{ scale: 0.9, opacity: 0.5 }}
+                    animate={{ scale: 1, opacity: 1 }}
+                    className="font-display text-3xl font-black text-primary tracking-tight"
+                  >
+                    {brl(total)}
+                  </motion.span>
                 </div>
               </div>
               <Button
