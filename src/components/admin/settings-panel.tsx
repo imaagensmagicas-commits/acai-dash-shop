@@ -8,6 +8,7 @@ import { Badge } from "@/components/ui/badge";
 import { Switch } from "@/components/ui/switch";
 import { toast } from "sonner";
 import { motion } from "framer-motion";
+import { cn } from "@/lib/utils";
 
 export function SettingsPanel() {
   const [storeOpen, setStoreOpen] = useState(true);
