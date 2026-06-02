@@ -2,19 +2,19 @@ import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useEffect } from "react";
 
 export const Route = createFileRoute("/")({
-  component: RedirectToStore,
+  component: RedirectToAdmin,
 });
 
-function RedirectToStore() {
+function RedirectToAdmin() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    navigate({ to: "/loja", replace: true });
+    navigate({ to: "/admin", replace: true });
   }, [navigate]);
 
   return (
     <div className="flex min-h-screen items-center justify-center">
-      <p className="text-muted-foreground animate-pulse">Redirecionando para a loja...</p>
+      <p className="text-muted-foreground animate-pulse">Redirecionando para o painel administrativo...</p>
     </div>
   );
 }
