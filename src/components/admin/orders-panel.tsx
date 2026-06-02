@@ -36,6 +36,7 @@ export function OrdersPanel() {
     toast.success(`Status atualizado para ${statusLabels[status]}`);
     setSelectedOrder(null);
     qc.invalidateQueries({ queryKey: ["admin-orders"] });
+    qc.invalidateQueries({ queryKey: ["admin-stats"] }); // Refresh dashboard stats too
   };
 
   const filteredOrders = orders.filter((o: any) => {
