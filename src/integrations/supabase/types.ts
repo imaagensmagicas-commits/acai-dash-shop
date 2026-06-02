@@ -143,6 +143,45 @@ export type Database = {
         }
         Relationships: []
       }
+      store_settings: {
+        Row: {
+          closing_time: string | null
+          created_at: string
+          id: string
+          is_open: boolean | null
+          logo_url: string | null
+          name: string
+          opening_time: string | null
+          slug: string
+          updated_at: string
+          whatsapp_number: string | null
+        }
+        Insert: {
+          closing_time?: string | null
+          created_at?: string
+          id?: string
+          is_open?: boolean | null
+          logo_url?: string | null
+          name: string
+          opening_time?: string | null
+          slug: string
+          updated_at?: string
+          whatsapp_number?: string | null
+        }
+        Update: {
+          closing_time?: string | null
+          created_at?: string
+          id?: string
+          is_open?: boolean | null
+          logo_url?: string | null
+          name?: string
+          opening_time?: string | null
+          slug?: string
+          updated_at?: string
+          whatsapp_number?: string | null
+        }
+        Relationships: []
+      }
       user_roles: {
         Row: {
           created_at: string

@@ -1,4 +1,4 @@
-import { LayoutDashboard, ShoppingBag, Package, Settings, LogOut, ChevronRight, Menu } from "lucide-react";
+import { LayoutDashboard, ShoppingBag, Package, Settings, LogOut, ChevronRight, Menu, Link as LinkIcon } from "lucide-react";
 import { 
   Sidebar, 
   SidebarContent, 
@@ -34,6 +34,7 @@ export function AdminSidebar({ currentTab, setTab }: AdminSidebarProps) {
     { id: "dashboard", label: "Dashboard", icon: LayoutDashboard },
     { id: "orders", label: "Pedidos", icon: ShoppingBag },
     { id: "products", label: "Produtos", icon: Package },
+    { id: "store-link", label: "Link da Loja", icon: LinkIcon },
     { id: "settings", label: "Configurações", icon: Settings },
   ];
 

@@ -22,7 +22,7 @@ function NotFoundComponent() {
         <h2 className="mt-4 font-display text-xl font-semibold">Página não encontrada</h2>
         <p className="mt-2 text-sm text-muted-foreground">Essa página não existe ou foi movida.</p>
         <div className="mt-6">
-          <Link to="/" className="inline-flex items-center justify-center rounded-full bg-primary-gradient px-5 py-2 text-sm font-medium text-primary-foreground shadow-elegant">
+          <Link to="/loja" className="inline-flex items-center justify-center rounded-full bg-primary-gradient px-5 py-2 text-sm font-medium text-primary-foreground shadow-elegant">
             Voltar à loja
           </Link>
         </div>
@@ -50,7 +50,7 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
           >
             Tentar de novo
           </button>
-          <a href="/" className="rounded-full border border-input px-4 py-2 text-sm font-medium">Início</a>
+          <a href="/loja" className="rounded-full border border-input px-4 py-2 text-sm font-medium">Início</a>
         </div>
       </div>
     </div>

@@ -11,6 +11,7 @@ import { Dashboard } from "@/components/admin/dashboard";
 import { OrdersPanel } from "@/components/admin/orders-panel";
 import { ProductsPanel } from "@/components/admin/products-panel";
 import { SettingsPanel } from "@/components/admin/settings-panel";
+import { StoreLinkSection } from "@/components/admin/store-link.tsx";
 
 export const Route = createFileRoute("/_authenticated/admin")({
   head: () => ({ 
@@ -130,6 +131,7 @@ function AdminPage() {
             {currentTab === "dashboard" && <Dashboard />}
             {currentTab === "orders" && <OrdersPanel />}
             {currentTab === "products" && <ProductsPanel />}
+            {currentTab === "store-link" && <StoreLinkSection />}
             {currentTab === "settings" && <SettingsPanel />}
           </motion.div>
         </div>
