@@ -11,6 +11,9 @@ import { useEffect, type ReactNode, useState } from "react";
 import { useRegisterSW } from 'virtual:pwa-register/react';
 import { Download } from "lucide-react";
 import { toast } from "sonner";
+import { Capacitor } from '@capacitor/core';
+import { StatusBar, Style } from '@capacitor/status-bar';
+import { SplashScreen } from '@capacitor/splash-screen';
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
