@@ -134,15 +134,15 @@ function AdminPage() {
       <AdminSidebar currentTab={currentTab} setTab={setCurrentTab} />
       <SidebarInset className="min-h-screen bg-surface">
         {/* Mobile & Desktop Header */}
-        <header className="sticky top-0 z-10 flex h-16 items-center gap-4 border-b bg-white px-4 md:px-8 shadow-sm">
-          <SidebarTrigger className="flex md:hidden" />
+        <header className="sticky top-0 z-20 flex h-16 items-center gap-4 border-b bg-white px-4 md:px-8 shadow-sm">
+          <SidebarTrigger className="flex" />
           <div className="flex flex-1 items-center justify-between">
             <h2 className="font-display text-lg font-bold text-slate-800 md:text-xl">
               {tabLabels[currentTab]}
             </h2>
             <Button variant="outline" size="sm" asChild className="rounded-xl border-slate-200 text-xs md:text-sm">
               <a href="/loja" target="_blank" className="flex items-center gap-2">
-                <ChevronLeft className="h-4 w-4" /> Ver Loja
+                <ChevronLeft className="h-4 w-4" /> <span className="hidden sm:inline">Ver Loja</span><span className="sm:hidden">Loja</span>
               </a>
             </Button>
           </div>
