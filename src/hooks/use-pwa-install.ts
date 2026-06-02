@@ -3,7 +3,6 @@ import { useState, useEffect } from 'react';
 export function usePWAInstall() {
   const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
   const [isInstallable, setIsInstallable] = useState(false);
-  const [isInstalled, setIsInstalled] = useState(false);
   const [isIOS, setIsIOS] = useState(false);
 
   useEffect(() => {
@@ -12,9 +11,8 @@ export function usePWAInstall() {
     const isIosDevice = /iphone|ipad|ipod/.test(userAgent);
     
     // Check if already installed
-    const isStandalone = window.matchMedia('(display-mode: standalone)').matches || (window.navigator as any).standalone === true;
+    const isStandalone = window.matchMedia('(display-mode: standalone)').matches || (window.navigator as any).standalone;
     
-    setIsInstalled(isStandalone);
     setIsIOS(isIosDevice && !isStandalone);
 
     const handler = (e: any) => {
@@ -51,5 +49,5 @@ export function usePWAInstall() {
     return outcome;
   };
 
-  return { isInstallable, isIOS, install, isInstalled };
+  return { isInstallable, isIOS, install };
 }

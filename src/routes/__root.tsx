@@ -11,15 +11,11 @@ import { useEffect, type ReactNode, useState } from "react";
 import { useRegisterSW } from 'virtual:pwa-register/react';
 import { Download } from "lucide-react";
 import { toast } from "sonner";
-import { Capacitor } from '@capacitor/core';
-import { StatusBar, Style } from '@capacitor/status-bar';
-import { SplashScreen } from '@capacitor/splash-screen';
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { CartProvider } from "@/lib/cart";
 import { Toaster } from "@/components/ui/sonner";
-import { usePushNotifications } from "@/hooks/use-push-notifications";
 
 function NotFoundComponent() {
   return (
@@ -109,40 +105,13 @@ function RootShell({ children }: { children: ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
-  usePushNotifications();
-
-  useEffect(() => {
-    const initCapacitor = async () => {
-      if (Capacitor.isNativePlatform()) {
-        try {
-          // Configura a barra de status
-          await StatusBar.setStyle({ style: Style.Light });
-          await StatusBar.setBackgroundColor({ color: '#ffffff' });
-          
-          // Oculta a splash screen após o app carregar
-          await SplashScreen.hide();
-          
-          console.log('Capacitor inicializado com sucesso');
-        } catch (error) {
-          console.error('Erro ao inicializar Capacitor:', error);
-        }
-      }
-    };
-
-    initCapacitor();
-  }, []);
 
   useRegisterSW({
     onRegistered(r: ServiceWorkerRegistration | undefined) {
-      if (Capacitor.isNativePlatform()) return; // Ignora SW em apps nativos
-      console.log('SW Registered: ', r);
-      if (r) {
-        r.update();
-      }
+      console.log('SW Registered: ' + r);
     },
     onRegisterError(error: any) {
-      if (Capacitor.isNativePlatform()) return;
-      console.error('SW registration error', error);
+      console.log('SW registration error', error);
     },
   });
 
