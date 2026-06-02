@@ -26,14 +26,17 @@ const Ctx = createContext<CartCtx | null>(null);
 export function CartProvider({ children }: { children: ReactNode }) {
   const [items, setItems] = useState<CartItem[]>([]);
   const [open, setOpen] = useState(false);
+  const [isAdding, setIsAdding] = useState(false);
 
   const add: CartCtx["add"] = useCallback((p) => {
+    setIsAdding(true);
     setItems((prev) => {
       const existing = prev.find((i) => i.id === p.id);
       if (existing) return prev.map((i) => (i.id === p.id ? { ...i, quantity: i.quantity + 1 } : i));
       return [...prev, { ...p, quantity: 1 }];
     });
     setOpen(true);
+    setTimeout(() => setIsAdding(false), 500);
   }, []);
 
   const remove: CartCtx["remove"] = useCallback((id) => {
