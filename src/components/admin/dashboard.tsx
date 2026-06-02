@@ -45,14 +45,16 @@ export function Dashboard() {
 
   return (
     <div className="space-y-6">
-      <div className="flex justify-between items-center">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
           <h1 className="font-display text-3xl font-bold">Dashboard</h1>
-          <p className="text-muted-foreground">Visão geral da sua operação hoje.</p>
+          <p className="text-muted-foreground">Resumo completo da sua operação em tempo real.</p>
         </div>
-        <Badge variant="outline" className="text-primary border-primary animate-pulse font-medium bg-primary/5 px-3 py-1">
-          Tempo Real Ativo
-        </Badge>
+        <div className="flex items-center gap-3">
+          <Badge variant="outline" className="text-primary border-primary animate-pulse font-medium bg-primary/5 px-3 py-1">
+            Tempo Real Ativo
+          </Badge>
+        </div>
       </div>
       
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
@@ -115,27 +117,81 @@ export function Dashboard() {
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 0.5 }}
         >
-          <Card className="shadow-elegant border-none bg-primary-gradient text-white overflow-hidden relative">
+          <Card className="shadow-elegant border-none bg-primary-gradient text-white overflow-hidden relative h-full">
             <div className="absolute top-0 right-0 p-8 opacity-10">
               <TrendingUp size={120} />
             </div>
             <CardHeader><CardTitle className="text-white">Resumo Financeiro</CardTitle></CardHeader>
-            <CardContent className="flex flex-col justify-center items-center h-[240px] relative z-10">
+            <CardContent className="flex flex-col justify-center items-center h-full min-h-[240px] relative z-10 pb-8">
               <div className="text-xs uppercase opacity-70 tracking-[0.2em] font-medium">Faturamento Total</div>
               <div className="text-5xl font-bold mt-2 tracking-tight">{brl(data?.totalRevenue || 0)}</div>
-              <div className="mt-10 grid grid-cols-2 gap-8 w-full">
+              <div className="mt-10 grid grid-cols-2 gap-4 w-full">
                 <div className="text-center bg-white/10 rounded-2xl p-4 backdrop-blur-sm">
                   <div className="text-[10px] uppercase opacity-70 tracking-widest font-bold">Ticket Médio</div>
                   <div className="text-lg font-bold mt-1">{brl((data?.totalRevenue || 0) / (data?.total || 1))}</div>
                 </div>
                 <div className="text-center bg-white/10 rounded-2xl p-4 backdrop-blur-sm">
-                  <div className="text-[10px] uppercase opacity-70 tracking-widest font-bold">Conversão</div>
-                  <div className="text-lg font-bold mt-1">100%</div>
+                  <div className="text-[10px] uppercase opacity-70 tracking-widest font-bold">Total Pedidos</div>
+                  <div className="text-lg font-bold mt-1">{data?.total || 0}</div>
                 </div>
               </div>
             </CardContent>
           </Card>
         </motion.div>
+      </div>
+
+      <div className="grid gap-6 md:grid-cols-3">
+        <Card className="md:col-span-2 shadow-card-soft border-none bg-white overflow-hidden">
+          <CardHeader className="border-b border-slate-50">
+            <CardTitle className="text-lg flex items-center gap-2">
+              <Package className="h-5 w-5 text-primary" />
+              Ranking de Produtos
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="p-0">
+            <div className="divide-y divide-slate-50">
+              {(data?.topProducts || []).map((product: any, i: number) => (
+                <div key={i} className="px-6 py-4 flex items-center justify-between hover:bg-slate-50 transition-colors">
+                  <div className="flex items-center gap-4">
+                    <div className="h-8 w-8 rounded-lg bg-slate-100 flex items-center justify-center font-bold text-slate-500 text-sm">
+                      #{i + 1}
+                    </div>
+                    <span className="font-bold text-slate-700">{product.name}</span>
+                  </div>
+                  <div className="flex items-center gap-4">
+                    <div className="text-right">
+                      <div className="text-sm font-bold text-slate-800">{product.value} vendas</div>
+                      <div className="text-[10px] text-muted-foreground uppercase font-medium">Quantidade total</div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+              {(!data?.topProducts || data.topProducts.length === 0) && (
+                <div className="px-6 py-12 text-center text-muted-foreground">
+                  Nenhum dado de vendas ainda.
+                </div>
+              )}
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card className="shadow-card-soft border-none bg-white">
+          <CardHeader>
+            <CardTitle className="text-lg">Dicas de Gestão</CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <div className="p-4 rounded-2xl bg-amber-50 border border-amber-100">
+              <p className="text-xs text-amber-800 font-medium leading-relaxed">
+                🚀 <strong>Dica:</strong> Seus combos estão vendendo bem? Considere criar novos para aumentar o ticket médio.
+              </p>
+            </div>
+            <div className="p-4 rounded-2xl bg-blue-50 border border-blue-100">
+              <p className="text-xs text-blue-800 font-medium leading-relaxed">
+                📱 <strong>Dica:</strong> Mantenha seu WhatsApp atualizado nas configurações para facilitar o contato dos clientes.
+              </p>
+            </div>
+          </CardContent>
+        </Card>
       </div>
     </div>
   );
