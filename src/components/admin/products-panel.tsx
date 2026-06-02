@@ -265,13 +265,51 @@ export function ProductsPanel() {
             </div>
 
             <div className="space-y-2">
-              <Label className="text-[10px] uppercase font-black tracking-widest text-muted-foreground">URL da Imagem</Label>
-              <Input 
-                placeholder="https://..." 
-                value={editing?.image_url ?? ""} 
-                onChange={(e) => setEditing({...editing, image_url: e.target.value})} 
-                className="rounded-xl border-slate-100 bg-slate-50 focus:bg-white transition-all"
+              <Label className="text-[10px] uppercase font-black tracking-widest text-muted-foreground">Imagem do Produto</Label>
+              <input
+                ref={fileInputRef}
+                type="file"
+                accept="image/*"
+                className="hidden"
+                onChange={(e) => {
+                  const f = e.target.files?.[0];
+                  if (f) handleImageUpload(f);
+                  e.target.value = "";
+                }}
               />
+              {editing?.image_url ? (
+                <div className="relative rounded-2xl overflow-hidden border border-slate-100 bg-slate-50 group">
+                  <img src={editing.image_url} alt="Pré-visualização" className="w-full h-48 object-cover" />
+                  <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
+                    <Button type="button" size="sm" variant="secondary" className="rounded-xl" onClick={() => fileInputRef.current?.click()} disabled={uploading}>
+                      <Upload className="h-3 w-3 mr-1" /> Trocar
+                    </Button>
+                    <Button type="button" size="sm" variant="destructive" className="rounded-xl" onClick={removeImage} disabled={uploading}>
+                      <X className="h-3 w-3 mr-1" /> Remover
+                    </Button>
+                  </div>
+                </div>
+              ) : (
+                <button
+                  type="button"
+                  onClick={() => fileInputRef.current?.click()}
+                  disabled={uploading}
+                  className="w-full h-48 rounded-2xl border-2 border-dashed border-slate-200 bg-slate-50 hover:bg-slate-100 hover:border-primary/40 transition-all flex flex-col items-center justify-center gap-2 text-muted-foreground"
+                >
+                  {uploading ? (
+                    <>
+                      <Loader2 className="h-6 w-6 animate-spin" />
+                      <span className="text-xs font-medium">Enviando e otimizando...</span>
+                    </>
+                  ) : (
+                    <>
+                      <Upload className="h-6 w-6" />
+                      <span className="text-xs font-bold uppercase tracking-wider">Selecionar do dispositivo</span>
+                      <span className="text-[10px]">JPG, PNG ou WEBP (otimizado automaticamente)</span>
+                    </>
+                  )}
+                </button>
+              )}
             </div>
 
             <div className="space-y-2">
