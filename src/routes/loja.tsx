@@ -19,12 +19,7 @@ export const Route = createFileRoute("/loja")({
   component: Home,
 });
 
-const categories = [
-  { key: "all", label: "Todos" },
-  { key: "300ml", label: "300ml" },
-  { key: "500ml", label: "500ml" },
-  { key: "especial", label: "Especiais" },
-];
+// Categories will be fetched from database
 
 function Home() {
   const [cat, setCat] = useState("all");
@@ -42,6 +37,18 @@ function Home() {
     },
   });
 
+  const { data: categories = [] } = useQuery({
+    queryKey: ["categories"],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("categories")
+        .select("*")
+        .order("order_index");
+      if (error) throw error;
+      return [{ id: "all", name: "Todos" }, ...data];
+    },
+  });
+
   const { data: products = [], isLoading } = useQuery({
     queryKey: ["products"],
     queryFn: async () => {
@@ -49,8 +56,7 @@ function Home() {
         .from("products")
         .select("*")
         .eq("active", true)
-        .order("category")
-        .order("price");
+        .order("name");
       if (error) throw error;
       return data;
     },
@@ -60,6 +66,13 @@ function Home() {
 
   return (
     <div className="min-h-screen bg-background">
+      {storeSettings?.primary_color && (
+        <style dangerouslySetInnerHTML={{ __html: `
+          :root {
+            --primary: ${storeSettings.primary_color};
+          }
+        ` }} />
+      )}
       <SiteHeader />
 
       {/* Hero */}
