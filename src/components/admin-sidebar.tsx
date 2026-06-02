@@ -41,14 +41,27 @@ export function AdminSidebar({ currentTab, setTab }: AdminSidebarProps) {
     { id: "settings", label: "Configurações", icon: Settings },
   ];
 
+  const { isInstallable, isIOS, install } = usePWAInstall();
+
   const handleTabChange = (tabId: string) => {
     setTab(tabId);
     setOpenMobile(false);
   };
 
   const handleInstall = async () => {
+    if (isIOS) {
+      toast.info("Para instalar no iPhone:", {
+        description: "Toque no ícone de compartilhar (seta para cima) e selecione 'Adicionar à Tela de Início'.",
+        duration: 8000,
+      });
+      return;
+    }
+
     try {
-      await install();
+      const result = await install();
+      if (result === 'accepted') {
+        toast.success("Aplicativo instalado com sucesso!");
+      }
     } catch (error) {
       toast.error("Erro ao instalar o aplicativo.");
       console.error(error);
