@@ -11,6 +11,7 @@ import { brl, statusLabels } from "@/lib/format";
 import { toast } from "sonner";
 import { motion, AnimatePresence } from "framer-motion";
 import { Input } from "@/components/ui/input";
+import { cn } from "@/lib/utils";
 
 type OrderStatus = 'novo' | 'preparando' | 'saiu_entrega' | 'finalizado' | 'cancelado';
 
