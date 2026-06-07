@@ -188,7 +188,7 @@ function Home() {
           <div className="flex flex-col items-center justify-center gap-8 text-center">
             <div className="flex items-center gap-3">
               {storeSettings?.logo_url ? (
-                <img src={storeSettings.logo_url} alt={storeSettings.name} className="h-12 w-12 rounded-xl object-cover ring-2 ring-white/10" />
+                <img src="/logo.jpeg" alt={storeSettings.name} className="h-12 w-12 rounded-xl object-cover ring-2 ring-white/10" />
               ) : (
                 <div className="grid h-12 w-12 place-items-center rounded-xl bg-[#A855F7] text-white font-display font-bold">
                   {storeSettings?.name?.substring(0, 2).toUpperCase() || "KL"}
