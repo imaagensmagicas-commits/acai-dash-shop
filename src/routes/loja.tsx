@@ -108,14 +108,6 @@ function Home() {
               <Button asChild variant="outline" size="lg" className="rounded-2xl h-14 px-8 text-base font-bold bg-white/5 border-white/20 hover:bg-white/10 text-white backdrop-blur-sm transition-all hover:scale-105 active:scale-95">
                 <a href="#como-funciona">Como funciona</a>
               </Button>
-              {storeSettings?.instagram_url && (
-                <Button asChild size="lg" className="rounded-2xl h-14 px-8 text-base font-bold bg-gradient-to-tr from-[#f09433] via-[#dc2743] to-[#bc1888] hover:opacity-90 text-white shadow-xl transition-all hover:scale-105 active:scale-95 border-none">
-                  <a href={storeSettings.instagram_url} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2">
-                    <Instagram className="h-5 w-5" />
-                    Siga no Instagram
-                  </a>
-                </Button>
-              )}
             </div>
             
             <div className="mt-16 flex flex-wrap gap-8 text-sm font-medium text-white/60">
