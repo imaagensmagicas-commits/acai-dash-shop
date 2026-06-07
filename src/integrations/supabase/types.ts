@@ -201,6 +201,7 @@ export type Database = {
           created_at: string
           delivery_fee: number | null
           id: string
+          instagram_url: string | null
           is_open: boolean | null
           logo_url: string | null
           name: string
@@ -216,6 +217,7 @@ export type Database = {
           created_at?: string
           delivery_fee?: number | null
           id?: string
+          instagram_url?: string | null
           is_open?: boolean | null
           logo_url?: string | null
           name: string
@@ -231,6 +233,7 @@ export type Database = {
           created_at?: string
           delivery_fee?: number | null
           id?: string
+          instagram_url?: string | null
           is_open?: boolean | null
           logo_url?: string | null
           name?: string

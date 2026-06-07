@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Settings, Store, Bell, Store as StoreIcon, Smartphone, Camera } from "lucide-react";
+import { Settings, Store, Bell, Store as StoreIcon, Smartphone, Camera, Instagram } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
@@ -58,6 +58,7 @@ export function SettingsPanel() {
       address: formData.get("address") as string,
       delivery_fee: Number(formData.get("delivery_fee")),
       primary_color: formData.get("primary_color") as string,
+      instagram_url: formData.get("instagram_url") as string,
     };
     updateMutation.mutate(values);
   };
@@ -147,6 +148,13 @@ export function SettingsPanel() {
                   <div className="space-y-2">
                     <Label htmlFor="whatsapp" className="text-[10px] uppercase font-black tracking-widest text-muted-foreground">Telefone WhatsApp</Label>
                     <Input id="whatsapp" name="whatsapp" defaultValue={storeSettings?.whatsapp_number || ""} className="rounded-xl border-slate-100 bg-slate-50" />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="instagram_url" className="text-[10px] uppercase font-black tracking-widest text-muted-foreground">Link do Instagram</Label>
+                    <div className="relative">
+                      <Instagram className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                      <Input id="instagram_url" name="instagram_url" defaultValue={storeSettings?.instagram_url || ""} className="rounded-xl border-slate-100 bg-slate-50 pl-10" placeholder="https://www.instagram.com/seu-perfil" />
+                    </div>
                   </div>
                 </div>
               </div>

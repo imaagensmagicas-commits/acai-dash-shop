@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { ShoppingBag, Store } from "lucide-react";
+import { ShoppingBag, Store, Instagram } from "lucide-react";
 import { motion } from "framer-motion";
 import { useCart } from "@/lib/cart";
 import { Button } from "@/components/ui/button";
@@ -38,11 +38,24 @@ export function SiteHeader() {
             <div className="text-[10px] uppercase tracking-[0.3em] text-gold font-bold">PREMIUM</div>
           </div>
         </Link>
-        <Button
-          variant="ghost"
-          onClick={() => setOpen(true)}
-          className="relative gap-2 bg-white/5 hover:bg-white/10 border border-white/10 text-white rounded-2xl px-6 h-11 transition-all"
-        >
+        <div className="flex items-center gap-2 sm:gap-4">
+          {storeSettings?.instagram_url && (
+            <Button
+              variant="ghost"
+              size="icon"
+              asChild
+              className="text-white hover:bg-white/10 rounded-xl"
+            >
+              <a href={storeSettings.instagram_url} target="_blank" rel="noopener noreferrer" title="@kl_acai2026">
+                <Instagram className="h-5 w-5" />
+              </a>
+            </Button>
+          )}
+          <Button
+            variant="ghost"
+            onClick={() => setOpen(true)}
+            className="relative gap-2 bg-white/5 hover:bg-white/10 border border-white/10 text-white rounded-2xl px-6 h-11 transition-all"
+          >
           <ShoppingBag className="h-5 w-5" />
           <span className="font-bold">Sacola</span>
           {count > 0 && (
@@ -55,7 +68,8 @@ export function SiteHeader() {
               {count}
             </motion.span>
           )}
-        </Button>
+          </Button>
+        </div>
       </div>
     </header>
   );
