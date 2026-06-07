@@ -23,34 +23,34 @@ export function SiteHeader() {
   });
 
   return (
-    <header className="sticky top-0 z-40 border-b border-border/60 bg-background/80 backdrop-blur-xl">
-      <div className="container mx-auto flex h-16 items-center justify-between px-4">
-        <Link to="/loja" className="flex items-center gap-2">
+    <header className="sticky top-0 z-50 bg-[#1A0B2E]/80 backdrop-blur-xl border-b border-white/5">
+      <div className="container mx-auto flex h-20 items-center justify-between px-6">
+        <Link to="/loja" className="flex items-center gap-3">
           {storeSettings?.logo_url ? (
-            <img src={storeSettings.logo_url} alt={storeSettings.name} className="h-9 w-9 rounded-xl object-cover shadow-elegant" />
+            <img src={storeSettings.logo_url} alt={storeSettings.name} className="h-10 w-10 rounded-xl object-cover ring-2 ring-white/10" />
           ) : (
-            <div className="grid h-9 w-9 place-items-center rounded-xl bg-primary-gradient text-primary-foreground font-display font-bold shadow-elegant">
+            <div className="grid h-10 w-10 place-items-center rounded-xl bg-[#A855F7] text-white font-display font-bold shadow-lg shadow-purple-500/20">
               {storeSettings?.name?.substring(0, 2).toUpperCase() || "KL"}
             </div>
           )}
           <div className="leading-tight">
-            <div className="font-display text-lg font-bold tracking-tight">{storeSettings?.name || "KL Açaí"}</div>
-            <div className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground">na garrafinha</div>
+            <div className="font-display text-xl font-bold tracking-tight text-white">{storeSettings?.name || "KL Açaí"}</div>
+            <div className="text-[10px] uppercase tracking-[0.3em] text-gold font-bold">PREMIUM</div>
           </div>
         </Link>
         <Button
-          variant="outline"
+          variant="ghost"
           onClick={() => setOpen(true)}
-          className={`relative gap-2 border-primary/20 hover:border-primary transition-all ${isAdding ? "scale-110 border-gold shadow-[0_0_15px_rgba(251,191,36,0.3)]" : ""}`}
+          className="relative gap-2 bg-white/5 hover:bg-white/10 border border-white/10 text-white rounded-2xl px-6 h-11 transition-all"
         >
-          <ShoppingBag className={`h-4 w-4 ${isAdding ? "animate-bounce" : ""}`} />
-          <span className="hidden sm:inline">Sacola</span>
+          <ShoppingBag className="h-5 w-5" />
+          <span className="font-bold">Sacola</span>
           {count > 0 && (
             <motion.span
               key={count}
               initial={{ scale: 0 }}
               animate={{ scale: 1 }}
-              className="absolute -right-2 -top-2 grid h-5 min-w-5 place-items-center rounded-full bg-gold px-1 text-[11px] font-bold text-gold-foreground shadow-md"
+              className="absolute -right-2 -top-2 grid h-6 min-w-6 place-items-center rounded-full bg-gold px-1.5 text-[12px] font-black text-gold-foreground shadow-lg border-2 border-[#1A0B2E]"
             >
               {count}
             </motion.span>
