@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { motion } from "framer-motion";
 import { useState } from "react";
-import { Sparkles, Truck, Clock, MapPin } from "lucide-react";
+import { Sparkles, Truck, Clock, MapPin, Instagram } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { SiteHeader } from "@/components/site-header";
 import { CartSheet } from "@/components/cart-sheet";
@@ -108,6 +108,14 @@ function Home() {
               <Button asChild variant="outline" size="lg" className="rounded-2xl h-14 px-8 text-base font-bold bg-white/5 border-white/20 hover:bg-white/10 text-white backdrop-blur-sm transition-all hover:scale-105 active:scale-95">
                 <a href="#como-funciona">Como funciona</a>
               </Button>
+              {storeSettings?.instagram_url && (
+                <Button asChild size="lg" className="rounded-2xl h-14 px-8 text-base font-bold bg-gradient-to-tr from-[#f09433] via-[#dc2743] to-[#bc1888] hover:opacity-90 text-white shadow-xl transition-all hover:scale-105 active:scale-95 border-none">
+                  <a href={storeSettings.instagram_url} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2">
+                    <Instagram className="h-5 w-5" />
+                    Siga no Instagram
+                  </a>
+                </Button>
+              )}
             </div>
             
             <div className="mt-16 flex flex-wrap gap-8 text-sm font-medium text-white/60">
@@ -175,9 +183,44 @@ function Home() {
         )}
       </section>
 
-      <footer className="border-t bg-surface py-8">
-        <div className="container mx-auto flex flex-col items-center justify-center gap-3 px-4 text-sm text-muted-foreground sm:flex-row">
-          <p>© {new Date().getFullYear()} {storeSettings?.name || "KL Açaí"}. Todos os direitos reservados.</p>
+      <footer className="border-t border-white/5 bg-[#1A0B2E] py-12">
+        <div className="container mx-auto px-6">
+          <div className="flex flex-col items-center justify-center gap-8 text-center">
+            <div className="flex items-center gap-3">
+              {storeSettings?.logo_url ? (
+                <img src={storeSettings.logo_url} alt={storeSettings.name} className="h-12 w-12 rounded-xl object-cover ring-2 ring-white/10" />
+              ) : (
+                <div className="grid h-12 w-12 place-items-center rounded-xl bg-[#A855F7] text-white font-display font-bold">
+                  {storeSettings?.name?.substring(0, 2).toUpperCase() || "KL"}
+                </div>
+              )}
+              <div className="text-left leading-tight">
+                <div className="font-display text-xl font-bold text-white tracking-tight">{storeSettings?.name || "KL Açaí"}</div>
+                <div className="text-[10px] uppercase tracking-[0.3em] text-gold font-bold">PREMIUM</div>
+              </div>
+            </div>
+
+            <div className="flex flex-col items-center gap-4">
+              <p className="text-white/60 max-w-sm text-sm">
+                O melhor açaí na garrafinha da região. Qualidade premium e sabor inigualável em cada gota.
+              </p>
+              {storeSettings?.instagram_url && (
+                <a 
+                  href={storeSettings.instagram_url} 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2 text-white/80 hover:text-gold transition-colors font-bold text-lg"
+                >
+                  <Instagram className="h-6 w-6" />
+                  @kl_acai2026
+                </a>
+              )}
+            </div>
+
+            <div className="pt-8 border-t border-white/5 w-full text-xs text-white/40">
+              <p>© {new Date().getFullYear()} {storeSettings?.name || "KL Açaí"}. Todos os direitos reservados.</p>
+            </div>
+          </div>
         </div>
       </footer>
 
