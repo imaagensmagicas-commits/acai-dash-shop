@@ -74,7 +74,7 @@
   --sidebar-border: oklch(0.9 0.015 300);
   --sidebar-ring: oklch(0.45 0.18 305);
 
-  --gradient-hero: linear-gradient(135deg, oklch(0.25 0.13 305) 0%, oklch(0.45 0.2 310) 50%, oklch(0.55 0.18 320) 100%);
+  --gradient-hero: linear-gradient(180deg, #1A0B2E 0%, #2D1B4E 100%);
   --gradient-primary: linear-gradient(135deg, oklch(0.32 0.13 305), oklch(0.5 0.2 310));
   --gradient-gold: linear-gradient(135deg, oklch(0.82 0.14 85), oklch(0.88 0.15 75));
   --shadow-elegant: 0 10px 40px -10px color-mix(in oklab, oklch(0.3 0.15 305) 30%, transparent);

@@ -74,40 +74,62 @@ function Home() {
       <SiteHeader />
 
       {/* Hero */}
-      <section className="relative overflow-hidden bg-hero text-primary-foreground">
-        <div className="absolute inset-0 opacity-30">
-          <div className="absolute -left-20 top-10 h-72 w-72 rounded-full bg-gold/30 blur-3xl animate-float" />
-          <div className="absolute right-0 bottom-0 h-96 w-96 rounded-full bg-primary/40 blur-3xl" />
+      <section className="relative overflow-hidden bg-hero text-primary-foreground min-h-[85vh] flex items-center">
+        <div className="absolute inset-0 opacity-40">
+          <div className="absolute -left-20 top-10 h-72 w-72 rounded-full bg-gold/20 blur-3xl animate-float" />
+          <div className="absolute right-0 bottom-0 h-96 w-96 rounded-full bg-primary/30 blur-3xl" />
         </div>
-        <div className="container relative mx-auto grid gap-8 px-4 py-16 md:grid-cols-2 md:py-24">
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
-            <div className="inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1 text-xs font-medium backdrop-blur">
-              <Sparkles className="h-3 w-3 text-gold" /> {storeSettings?.name || "Açaí cremoso, batido na hora"}
+        <div className="container relative mx-auto px-6 py-12 md:py-24">
+          <motion.div 
+            initial={{ opacity: 0, y: 30 }} 
+            animate={{ opacity: 1, y: 0 }} 
+            transition={{ duration: 0.8, ease: "easeOut" }}
+            className="max-w-2xl"
+          >
+            <div className="inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-1.5 text-sm font-medium backdrop-blur-md border border-white/10 mb-6">
+              <Sparkles className="h-4 w-4 text-gold" /> 
+              <span className="text-white/90">Açaí cremoso premium</span>
             </div>
-            <h1 className="mt-4 font-display text-5xl font-bold leading-[1.05] md:text-6xl">
-              O melhor açaí <span className="text-gold">na garrafinha</span>
+            
+            <h1 className="font-display text-5xl font-bold leading-[1.1] md:text-7xl lg:text-8xl tracking-tight">
+              Açaí na <br />
+              <span className="text-white">garrafinha,</span> <br />
+              <span className="text-gold">do seu jeito.</span>
             </h1>
-            <p className="mt-4 max-w-md text-base text-primary-foreground/80">
-              Sabores irresistíveis, entrega rápida e aquele sabor que você ama. Peça agora.
+            
+            <p className="mt-8 max-w-lg text-lg md:text-xl text-white/70 leading-relaxed font-sans">
+              Escolha o tamanho, monte com seus sabores favoritos e receba em minutos. Ou retire no local.
             </p>
-            <div className="mt-6 flex flex-wrap gap-3">
-              <Button asChild size="lg" className="rounded-full bg-gold-gradient text-gold-foreground shadow-glow hover:opacity-95">
+            
+            <div className="mt-10 flex flex-wrap gap-4">
+              <Button asChild size="lg" className="rounded-2xl h-14 px-8 text-base font-bold bg-[#A855F7] hover:bg-[#9333EA] text-white shadow-xl transition-all hover:scale-105 active:scale-95">
                 <a href="#cardapio">Ver cardápio</a>
               </Button>
+              <Button asChild variant="outline" size="lg" className="rounded-2xl h-14 px-8 text-base font-bold bg-white/5 border-white/20 hover:bg-white/10 text-white backdrop-blur-sm transition-all hover:scale-105 active:scale-95">
+                <a href="#como-funciona">Como funciona</a>
+              </Button>
             </div>
-            <div className="mt-8 flex flex-wrap gap-5 text-sm text-primary-foreground/80">
-              <span className="flex items-center gap-2"><Truck className="h-4 w-4 text-gold" /> Entrega rápida</span>
-              <span className="flex items-center gap-2"><Clock className="h-4 w-4 text-gold" /> {storeSettings?.is_open ? "Aberto agora" : "Fechado"}</span>
-              <span className="flex items-center gap-2"><MapPin className="h-4 w-4 text-gold" /> Retirada disponível</span>
+            
+            <div className="mt-16 flex flex-wrap gap-8 text-sm font-medium text-white/60">
+              <div className="flex items-center gap-3">
+                <div className="p-2 rounded-full bg-white/5 border border-white/10">
+                  <Truck className="h-4 w-4 text-gold" />
+                </div>
+                <span>Entrega rápida</span>
+              </div>
+              <div className="flex items-center gap-3">
+                <div className="p-2 rounded-full bg-white/5 border border-white/10">
+                  <Clock className="h-4 w-4 text-gold" />
+                </div>
+                <span>Pronto em 15min</span>
+              </div>
+              <div className="flex items-center gap-3">
+                <div className="p-2 rounded-full bg-white/5 border border-white/10">
+                  <Sparkles className="h-4 w-4 text-gold" />
+                </div>
+                <span>Sabores ilimitados</span>
+              </div>
             </div>
-          </motion.div>
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.7, delay: 0.1 }}
-            className="relative hidden items-center justify-center md:flex"
-          >
-            <div className="text-[14rem] leading-none animate-float drop-shadow-2xl">🍇</div>
           </motion.div>
         </div>
       </section>
