@@ -27,7 +27,7 @@ export function SiteHeader() {
       <div className="container mx-auto flex h-20 items-center justify-between px-6">
         <Link to="/loja" className="flex items-center gap-3">
           {storeSettings?.logo_url ? (
-            <img src={storeSettings.logo_url} alt={storeSettings.name} className="h-10 w-10 rounded-xl object-cover ring-2 ring-white/10" />
+            <img src="/logo.jpeg" alt={storeSettings.name} className="h-10 w-10 rounded-xl object-cover ring-2 ring-white/10" />
           ) : (
             <div className="grid h-10 w-10 place-items-center rounded-xl bg-[#A855F7] text-white font-display font-bold shadow-lg shadow-purple-500/20">
               {storeSettings?.name?.substring(0, 2).toUpperCase() || "KL"}
