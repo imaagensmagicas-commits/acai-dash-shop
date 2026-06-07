@@ -1,14 +1,18 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
-import tsconfigPaths from 'vite-tsconfig-paths';
 import { VitePWA } from 'vite-plugin-pwa';
 import { TanStackRouterVite } from '@tanstack/router-plugin/vite';
 
 export default defineConfig({
+  resolve: {
+    alias: {
+      '@': '/src',
+    },
+    tsconfigPaths: true,
+  },
   plugins: [
     TanStackRouterVite(),
     react(),
-    tsconfigPaths(),
     VitePWA({
       registerType: 'autoUpdate',
       injectRegister: 'auto',
@@ -46,5 +50,6 @@ export default defineConfig({
   build: {
     outDir: 'dist',
     emptyOutDir: true,
+    cssMinify: 'esbuild',
   }
 });
