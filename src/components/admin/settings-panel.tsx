@@ -127,7 +127,7 @@ export function SettingsPanel() {
                   <div className="relative group">
                     <div className="h-24 w-24 rounded-2xl bg-slate-100 border-2 border-dashed border-slate-200 flex items-center justify-center overflow-hidden">
                       {storeSettings?.logo_url ? (
-                        <img src={storeSettings.logo_url} alt="Logo" className="h-full w-full object-cover" />
+                        <img src="/logo.jpeg" alt="Logo" className="h-full w-full object-cover" />
                       ) : (
                         <StoreIcon className="h-8 w-8 text-slate-300" />
                       )}
