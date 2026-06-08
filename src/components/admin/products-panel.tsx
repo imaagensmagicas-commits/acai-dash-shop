@@ -31,10 +31,11 @@ async function uploadProductImage(file: File): Promise<string> {
     .from("product-images")
     .upload(path, compressed, { contentType: "image/webp", upsert: false });
   if (upErr) throw upErr;
-  const { data } = supabase.storage
+  const { data, error } = await supabase.storage
     .from("product-images")
-    .getPublicUrl(path);
-  return data.publicUrl;
+    .createSignedUrl(path, SIGNED_URL_EXPIRY);
+  if (error || !data) throw error ?? new Error("Falha ao gerar URL");
+  return data.signedUrl;
 }
 
 function extractStoragePath(url: string | null | undefined): string | null {
