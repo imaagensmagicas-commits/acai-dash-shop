@@ -1,0 +1,1 @@
+CREATE POLICY "Permitir leitura pública para imagens de produtos" ON storage.objects FOR SELECT USING (bucket_id = 'product-images');
