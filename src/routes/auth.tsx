@@ -52,7 +52,7 @@ function AuthPage() {
   return (
     <div className="grid min-h-screen place-items-center bg-hero p-4">
       <div className="w-full max-w-sm rounded-2xl bg-card p-7 shadow-elegant">
-        <Link to="/loja-acai" className="mb-5 flex items-center justify-center gap-2">
+        <Link to="/loja" className="mb-5 flex items-center justify-center gap-2">
           <div className="grid h-9 w-9 place-items-center rounded-xl bg-primary-gradient text-primary-foreground font-display font-bold">KL</div>
           <span className="font-display text-lg font-bold">Painel Admin</span>
         </Link>

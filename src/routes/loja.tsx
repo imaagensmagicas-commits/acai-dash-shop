@@ -9,7 +9,7 @@ import { CartSheet } from "@/components/cart-sheet";
 import { ProductCard } from "@/components/product-card";
 import { Button } from "@/components/ui/button";
 
-export const Route = createFileRoute("/loja-acai")({
+export const Route = createFileRoute("/loja")({
   head: () => ({
     meta: [
       { title: "KL Açaí — Açaí premium na garrafinha" },
