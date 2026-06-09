@@ -9,15 +9,15 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as LojaRouteImport } from './routes/loja'
+import { Route as LojaAcaiRouteImport } from './routes/loja-acai'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
 
-const LojaRoute = LojaRouteImport.update({
-  id: '/loja',
-  path: '/loja',
+const LojaAcaiRoute = LojaAcaiRouteImport.update({
+  id: '/loja-acai',
+  path: '/loja-acai',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthRoute = AuthRouteImport.update({
@@ -43,13 +43,13 @@ const AuthenticatedAdminRoute = AuthenticatedAdminRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
-  '/loja': typeof LojaRoute
+  '/loja-acai': typeof LojaAcaiRoute
   '/admin': typeof AuthenticatedAdminRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
-  '/loja': typeof LojaRoute
+  '/loja-acai': typeof LojaAcaiRoute
   '/admin': typeof AuthenticatedAdminRoute
 }
 export interface FileRoutesById {
@@ -57,20 +57,20 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/auth': typeof AuthRoute
-  '/loja': typeof LojaRoute
+  '/loja-acai': typeof LojaAcaiRoute
   '/_authenticated/admin': typeof AuthenticatedAdminRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/auth' | '/loja' | '/admin'
+  fullPaths: '/' | '/auth' | '/loja-acai' | '/admin'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/auth' | '/loja' | '/admin'
+  to: '/' | '/auth' | '/loja-acai' | '/admin'
   id:
     | '__root__'
     | '/'
     | '/_authenticated'
     | '/auth'
-    | '/loja'
+    | '/loja-acai'
     | '/_authenticated/admin'
   fileRoutesById: FileRoutesById
 }
@@ -78,16 +78,16 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   AuthRoute: typeof AuthRoute
-  LojaRoute: typeof LojaRoute
+  LojaAcaiRoute: typeof LojaAcaiRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/loja': {
-      id: '/loja'
-      path: '/loja'
-      fullPath: '/loja'
-      preLoaderRoute: typeof LojaRouteImport
+    '/loja-acai': {
+      id: '/loja-acai'
+      path: '/loja-acai'
+      fullPath: '/loja-acai'
+      preLoaderRoute: typeof LojaAcaiRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/auth': {
@@ -136,7 +136,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   AuthRoute: AuthRoute,
-  LojaRoute: LojaRoute,
+  LojaAcaiRoute: LojaAcaiRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

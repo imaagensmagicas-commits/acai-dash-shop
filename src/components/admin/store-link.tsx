@@ -14,7 +14,7 @@ export function StoreLinkSection() {
   const [storeUrl, setStoreUrl] = useState("");
 
   useEffect(() => {
-    setStoreUrl(`${window.location.origin}/loja`);
+    setStoreUrl(`${window.location.origin}/loja-acai`);
   }, []);
 
   const { data: storeSettings } = useQuery({
@@ -91,7 +91,7 @@ export function StoreLinkSection() {
                   Copiar Link
                 </Button>
                 <Button asChild className="rounded-xl gap-2 bg-primary-gradient border-none">
-                  <a href="/loja" target="_blank" rel="noopener noreferrer">
+                  <a href="/loja-acai" target="_blank" rel="noopener noreferrer">
                     <ExternalLink className="h-4 w-4" />
                     Abrir Loja
                   </a>
