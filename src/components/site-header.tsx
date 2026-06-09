@@ -25,7 +25,7 @@ export function SiteHeader() {
   return (
     <header className="sticky top-0 z-50 bg-[#1A0B2E]/80 backdrop-blur-xl border-b border-white/5">
       <div className="container mx-auto flex h-20 items-center justify-between px-6">
-        <Link to="/loja" className="flex items-center gap-3">
+        <Link to="/loja-acai" className="flex items-center gap-3">
           {storeSettings?.logo_url ? (
             <img src="/logo.jpeg" alt={storeSettings.name} className="h-10 w-10 rounded-xl object-cover ring-2 ring-white/10" />
           ) : (
