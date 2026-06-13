@@ -19,7 +19,7 @@ import { Menu, ChevronLeft } from "lucide-react";
 export const Route = createFileRoute("/_authenticated/admin")({
   head: () => ({ 
     meta: [
-      { title: "Painel Administrativo — KL Açaí" }, 
+      { title: "Painel Administrativo — Lore Açaí" }, 
       { name: "robots", content: "noindex" }
     ] 
   }),

@@ -89,7 +89,7 @@ export function CheckoutDialog({ open, onOpenChange }: { open: boolean; onOpenCh
       );
       if (itemsErr) throw itemsErr;
 
-      setOrderId(`KL-${String(order.sequential_id || order.id.slice(0, 4)).padStart(4, '0')}`);
+      setOrderId(`LA-${String(order.sequential_id || order.id.slice(0, 4)).padStart(4, '0')}`);
       setStep("success");
       clear();
     } catch (err) {
