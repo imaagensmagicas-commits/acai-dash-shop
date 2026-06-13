@@ -5,6 +5,7 @@ import { useCart } from "@/lib/cart";
 import { Button } from "@/components/ui/button";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
+import loreLogo from "@/assets/lore-acai-logo.jpeg.asset.json";
 
 export function SiteHeader() {
   const { count, setOpen, isAdding } = useCart();
