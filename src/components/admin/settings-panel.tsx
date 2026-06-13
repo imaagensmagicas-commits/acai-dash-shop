@@ -30,19 +30,24 @@ export function SettingsPanel() {
 
   const updateMutation = useMutation({
     mutationFn: async (values: any) => {
-      const { error } = await supabase
+      const { data, error } = await supabase
         .from("store_settings")
         .update(values)
-        .eq("slug", "loja");
+        .eq("slug", "loja")
+        .select();
       if (error) throw error;
+      if (!data || data.length === 0) {
+        throw new Error("Nenhuma linha foi atualizada. Verifique se sua conta tem permissão de admin.");
+      }
+      return data;
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["store-settings-admin"] });
       queryClient.invalidateQueries({ queryKey: ["store-settings"] });
       toast.success("Configurações salvas com sucesso!");
     },
-    onError: (error) => {
-      toast.error("Erro ao salvar configurações");
+    onError: (error: any) => {
+      toast.error(error?.message || "Erro ao salvar configurações");
       console.error(error);
     }
   });
