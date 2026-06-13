@@ -5,6 +5,7 @@ import { useCart } from "@/lib/cart";
 import { Button } from "@/components/ui/button";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
+import loreLogo from "@/assets/lore-acai-logo.jpeg.asset.json";
 
 export function SiteHeader() {
   const { count, setOpen, isAdding } = useCart();
@@ -26,13 +27,7 @@ export function SiteHeader() {
     <header className="sticky top-0 z-50 bg-[#1A0B2E]/80 backdrop-blur-xl border-b border-white/5">
       <div className="container mx-auto flex h-20 items-center justify-between px-6">
         <Link to="/loja" className="flex items-center gap-3">
-          {storeSettings?.logo_url ? (
-            <img src="/logo.jpeg" alt={storeSettings.name} className="h-10 w-10 rounded-xl object-cover ring-2 ring-white/10" />
-          ) : (
-            <div className="grid h-10 w-10 place-items-center rounded-xl bg-[#A855F7] text-white font-display font-bold shadow-lg shadow-purple-500/20">
-              {storeSettings?.name?.substring(0, 2).toUpperCase() || "LA"}
-            </div>
-          )}
+          <img src={loreLogo.url} alt={storeSettings?.name || "Lore Açaí"} className="h-10 w-10 rounded-xl object-cover ring-2 ring-white/10" />
           <div className="leading-tight">
             <div className="font-display text-xl font-bold tracking-tight text-white">{storeSettings?.name || "Lore Açaí"}</div>
             <div className="text-[10px] uppercase tracking-[0.3em] text-gold font-bold">PREMIUM</div>
