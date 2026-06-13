@@ -125,7 +125,14 @@ export function ProfilePanel() {
                   <div className="relative group">
                     <div className="h-24 w-24 rounded-full bg-slate-100 border-4 border-white shadow-md overflow-hidden flex items-center justify-center">
                       {profile?.avatar_url ? (
-                        <img src={profile.avatar_url} alt="Avatar" className="h-full w-full object-cover" />
+                        <img
+                          src={profile.avatar_url}
+                          alt="Avatar"
+                          className="h-full w-full object-cover"
+                          onError={(e) => {
+                            (e.currentTarget as HTMLImageElement).style.display = "none";
+                          }}
+                        />
                       ) : (
                         <User className="h-10 w-10 text-slate-300" />
                       )}
