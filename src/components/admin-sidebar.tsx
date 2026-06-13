@@ -72,10 +72,10 @@ export function AdminSidebar({ currentTab, setTab }: AdminSidebarProps) {
     <Sidebar collapsible="offcanvas">
       <SidebarHeader className="p-6 border-b border-sidebar-border/50">
         <div className="flex items-center gap-3">
-          <div className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-primary-gradient text-primary-foreground font-display font-bold shadow-lg">KL</div>
+          <div className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-primary-gradient text-primary-foreground font-display font-bold shadow-lg">LA</div>
           <div className="flex flex-col overflow-hidden">
             <div className="font-display font-bold leading-tight text-sidebar-foreground truncate">Painel Admin</div>
-            <div className="text-[10px] uppercase tracking-widest text-muted-foreground truncate">KL Açaí</div>
+            <div className="text-[10px] uppercase tracking-widest text-muted-foreground truncate">Lore Açaí</div>
           </div>
         </div>
       </SidebarHeader>

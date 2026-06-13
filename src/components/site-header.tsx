@@ -30,11 +30,11 @@ export function SiteHeader() {
             <img src="/logo.jpeg" alt={storeSettings.name} className="h-10 w-10 rounded-xl object-cover ring-2 ring-white/10" />
           ) : (
             <div className="grid h-10 w-10 place-items-center rounded-xl bg-[#A855F7] text-white font-display font-bold shadow-lg shadow-purple-500/20">
-              {storeSettings?.name?.substring(0, 2).toUpperCase() || "KL"}
+              {storeSettings?.name?.substring(0, 2).toUpperCase() || "LA"}
             </div>
           )}
           <div className="leading-tight">
-            <div className="font-display text-xl font-bold tracking-tight text-white">{storeSettings?.name || "KL Açaí"}</div>
+            <div className="font-display text-xl font-bold tracking-tight text-white">{storeSettings?.name || "Lore Açaí"}</div>
             <div className="text-[10px] uppercase tracking-[0.3em] text-gold font-bold">PREMIUM</div>
           </div>
         </Link>
@@ -46,7 +46,7 @@ export function SiteHeader() {
               asChild
               className="text-white hover:bg-white/10 rounded-xl"
             >
-              <a href={storeSettings.instagram_url} target="_blank" rel="noopener noreferrer" title="@kl_acai2026">
+              <a href={storeSettings.instagram_url} target="_blank" rel="noopener noreferrer" title="@lore_acai">
                 <Instagram className="h-5 w-5" />
               </a>
             </Button>

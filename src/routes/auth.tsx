@@ -8,7 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
 export const Route = createFileRoute("/auth")({
-  head: () => ({ meta: [{ title: "Entrar — KL Açaí" }, { name: "robots", content: "noindex" }] }),
+  head: () => ({ meta: [{ title: "Entrar — Lore Açaí" }, { name: "robots", content: "noindex" }] }),
   component: AuthPage,
 });
 
@@ -53,7 +53,7 @@ function AuthPage() {
     <div className="grid min-h-screen place-items-center bg-hero p-4">
       <div className="w-full max-w-sm rounded-2xl bg-card p-7 shadow-elegant">
         <Link to="/loja" className="mb-5 flex items-center justify-center gap-2">
-          <div className="grid h-9 w-9 place-items-center rounded-xl bg-primary-gradient text-primary-foreground font-display font-bold">KL</div>
+          <div className="grid h-9 w-9 place-items-center rounded-xl bg-primary-gradient text-primary-foreground font-display font-bold">LA</div>
           <span className="font-display text-lg font-bold">Painel Admin</span>
         </Link>
         <h1 className="mb-1 text-center font-display text-xl font-semibold">

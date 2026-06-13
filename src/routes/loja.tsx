@@ -12,7 +12,7 @@ import { Button } from "@/components/ui/button";
 export const Route = createFileRoute("/loja")({
   head: () => ({
     meta: [
-      { title: "KL Açaí — Açaí premium na garrafinha" },
+      { title: "Lore Açaí — Açaí premium na garrafinha" },
       { name: "description", content: "Peça seu açaí na garrafinha 300ml ou 500ml. Entrega rápida e sabor cremoso." },
     ],
   }),
@@ -183,11 +183,11 @@ function Home() {
                 <img src="/logo.jpeg" alt={storeSettings.name} className="h-12 w-12 rounded-xl object-cover ring-2 ring-white/10" />
               ) : (
                 <div className="grid h-12 w-12 place-items-center rounded-xl bg-[#A855F7] text-white font-display font-bold">
-                  {storeSettings?.name?.substring(0, 2).toUpperCase() || "KL"}
+                  {storeSettings?.name?.substring(0, 2).toUpperCase() || "LA"}
                 </div>
               )}
               <div className="text-left leading-tight">
-                <div className="font-display text-xl font-bold text-white tracking-tight">{storeSettings?.name || "KL Açaí"}</div>
+                <div className="font-display text-xl font-bold text-white tracking-tight">{storeSettings?.name || "Lore Açaí"}</div>
                 <div className="text-[10px] uppercase tracking-[0.3em] text-gold font-bold">PREMIUM</div>
               </div>
             </div>
@@ -204,13 +204,13 @@ function Home() {
                   className="flex items-center gap-2 text-white/80 hover:text-gold transition-colors font-bold text-lg"
                 >
                   <Instagram className="h-6 w-6" />
-                  @kl_acai2026
+                  @lore_acai
                 </a>
               )}
             </div>
 
             <div className="pt-8 border-t border-white/5 w-full text-xs text-white/40">
-              <p>© {new Date().getFullYear()} {storeSettings?.name || "KL Açaí"}. Todos os direitos reservados.</p>
+              <p>© {new Date().getFullYear()} {storeSettings?.name || "Lore Açaí"}. Todos os direitos reservados.</p>
             </div>
           </div>
         </div>

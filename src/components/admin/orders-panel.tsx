@@ -313,7 +313,7 @@ export function OrdersPanel() {
               {/* Print Only View */}
               <div className="print-only fixed inset-0 bg-white p-12 space-y-8 text-black">
                 <div className="text-center space-y-2 border-b-2 border-black pb-8">
-                  <h1 className="text-4xl font-black tracking-tighter">KL AÇAÍ</h1>
+                  <h1 className="text-4xl font-black tracking-tighter">LORE AÇAÍ</h1>
                   <p className="text-sm font-bold uppercase tracking-[0.3em]">Comprovante de Pedido</p>
                   <div className="mt-4 text-6xl font-black">#{selectedOrder.order_number}</div>
                 </div>
