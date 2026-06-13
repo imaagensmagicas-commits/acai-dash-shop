@@ -6,9 +6,6 @@ import {
   useRouter,
 } from "@tanstack/react-router";
 import { useEffect, type ReactNode, useState } from "react";
-import { useRegisterSW } from 'virtual:pwa-register/react';
-import { Download } from "lucide-react";
-import { toast } from "sonner";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
@@ -79,6 +76,9 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       { rel: "stylesheet", href: "https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700;800&family=Manrope:wght@400;500;600;700&display=swap" },
+      { rel: "manifest", href: "/manifest.webmanifest" },
+      { rel: "icon", href: "/pwa-192x192.png" },
+      { rel: "apple-touch-icon", href: "/pwa-192x192.png" },
     ],
   }),
   shellComponent: RootShell,
@@ -97,15 +97,6 @@ function RootShell({ children }: { children: ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
-
-  useRegisterSW({
-    onRegistered(r: ServiceWorkerRegistration | undefined) {
-      console.log('SW Registered: ' + r);
-    },
-    onRegisterError(error: any) {
-      console.log('SW registration error', error);
-    },
-  });
 
   return (
     <QueryClientProvider client={queryClient}>
