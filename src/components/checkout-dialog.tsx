@@ -13,8 +13,17 @@ import { AnimatePresence, motion } from "framer-motion";
 
 type Step = "review" | "details" | "summary" | "success";
 
+import { useQuery } from "@tanstack/react-query";
+
 export function CheckoutDialog({ open, onOpenChange }: { open: boolean; onOpenChange: (o: boolean) => void }) {
   const { items, total, clear, setQty, remove } = useCart();
+  const { data: storeSettings } = useQuery({
+    queryKey: ["store-settings"],
+    queryFn: async () => {
+      const { data } = await supabase.from("store_settings").select("whatsapp_number").eq("slug", "loja").maybeSingle();
+      return data;
+    },
+  });
   const [step, setStep] = useState<Step>("review");
   const [type, setType] = useState<"entrega" | "retirada">("entrega");
   const [name, setName] = useState("");
