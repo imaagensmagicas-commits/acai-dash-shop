@@ -1,0 +1,1 @@
+UPDATE public.store_settings SET whatsapp_number = '+5585991085534' WHERE slug = 'loja';
