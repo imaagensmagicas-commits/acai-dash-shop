@@ -111,7 +111,8 @@ export function CheckoutDialog({ open, onOpenChange }: { open: boolean; onOpenCh
 
   const openWhatsApp = () => {
     const message = `Olá! Acabei de fazer o pedido ${orderId} no site.`;
-    window.open(`https://wa.me/5588999999999?text=${encodeURIComponent(message)}`, "_blank");
+    const num = (storeSettings?.whatsapp_number || "5585991085534").replace(/\D/g, "");
+    window.open(`https://wa.me/${num}?text=${encodeURIComponent(message)}`, "_blank");
   };
 
   return (
